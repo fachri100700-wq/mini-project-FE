@@ -1,28 +1,7 @@
-import { useFormik } from "formik";
-import { loginSchema } from "../../features/login/validations/loginSchema";
-import type { User } from "../../features/login/types";
-import axiosInstance from "../utils/axiosInstance";
+import { useFormlogin } from "../../features/login/hooks/useFormLogin";
 
 export default function Login() {
-
-    const onHandleLogin = async({ email, password }: Pick<User, "email" | "password">) => {
-        await axiosInstance.post('/auth/login', {
-            email,
-            password
-        })
-    };
-
-    const formik = useFormik({
-            initialValues: {
-                email: '',
-                password: ''
-            },
-            validationSchema: loginSchema,
-            onSubmit: async({ email, password }) => {
-                await onHandleLogin({ email, password })
-            },
-        });
-
+    const { formik } = useFormlogin();
     
     return(
         <div className="min-h-screen flex items-center justify-center">

@@ -1,24 +1,9 @@
 import RoleCard from "../../components/register/RegisterRoleCard";
 import { FaUser, FaCalendarCheck } from "react-icons/fa";
-import { useFormik } from "formik";
-import { registerSchema } from "../../features/register/validations/registerSchema";
-
-type Role = "customer" | "organizer";
+import { useFormRegister } from "../../features/register/hooks/useFormRegister";
 
 export default function Register() {
-
-    const formik = useFormik({
-        initialValues: {
-            role: '' as Role,
-            username: '',
-            email: '',
-            password: ''
-        },
-        validationSchema: registerSchema,
-        onSubmit: (values) => {
-            console.log(values);
-        }
-    });
+    const { formik } = useFormRegister();
 
     return (
         <div className="min-h-screen flex items-center justify-center">
