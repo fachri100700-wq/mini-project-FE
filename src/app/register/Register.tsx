@@ -18,7 +18,7 @@ export default function Register() {
                             <RoleCard
                             icon={FaUser}
                             title="Customer"
-                            description="Browse and use the platform"
+                            description="Browse events and book tickets"
                             selected={formik.values.role === "customer"}
                             onClick={() => formik.setFieldValue("role", "customer")}
                             />
@@ -44,6 +44,7 @@ export default function Register() {
                             onSubmit={formik?.handleSubmit}
                             className="space-y-3"    
                         >
+
                             <input
                                 type="text"
                                 name="username"
@@ -53,41 +54,42 @@ export default function Register() {
                                 onBlur={formik.handleBlur}
                                 className="input input-bordered w-full bg-zinc-200" 
                             />
-                            {formik.touched.username && formik.errors.username && (
-                                <p className="text-sm text-error">
-                                    {formik.errors.username}
-                                </p>
-                            )}
+                            
+                            <p className="text-sm text-error min-h-[1.25rem]">
+                                {(formik.touched.username || formik.submitCount > 0) && formik.errors.username}
+                            </p>
 
                             <input
                                 type="email"
                                 name="email"
                                 onChange={formik?.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.email}
                                 placeholder="Email"
                                 className="input input-bordered w-full bg-zinc-200" 
                             />
-                            {formik.touched.email && formik.errors.email && (
-                                <p className="text-sm text-error">
-                                    {formik.errors.email}
-                                </p>
-                            )}
+
+                            <p className="text-sm text-error min-h-[1.25rem]">
+                                {(formik.touched.email || formik.submitCount > 0) && formik.errors.email}
+                            </p>
 
                             <input
                                 type="password"
                                 name="password"
                                 onChange={formik?.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.password}
                                 placeholder="Password"
                                 className="input input-bordered w-full bg-zinc-200" 
                             />
-                            {formik.touched.password && formik.errors.password && (
-                                <p className="text-sm text-error">
-                                    {formik.errors.password}
-                                </p>
-                            )}
+
+                            <p className="text-sm text-error min-h-[1.25rem]">
+                                {(formik.touched.password || formik.submitCount > 0) && formik.errors.password}
+                            </p>
 
                             <div className="card-actions justify-end mt-4">
-                                <button disabled={!formik.values.role} className="btn btn-primary w-full">
-                                    Create Account
+                                <button disabled={!formik.values.role || formik.isSubmitting} className="btn btn-primary w-full">
+                                    {formik.isSubmitting ? "Creating account..." : "Create Account"}
                                 </button>
                             </div>
                         </form>

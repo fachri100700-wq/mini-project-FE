@@ -21,27 +21,29 @@ export default function Login() {
                             type="email"
                             name="email"
                             onChange={formik?.handleChange}
+                            value={formik.values.email}
+                            onBlur={formik.handleBlur}
                             placeholder="Email"
                             className="input input-bordered w-full bg-zinc-200" 
                         />
-                        {formik.touched.email && formik.errors.email && (
-                            <p className="text-sm text-error">
-                                {formik.errors.email}
+
+                            <p className="text-sm text-error min-h-[1.25rem]">
+                                {(formik.touched.email || formik.submitCount > 0) && formik.errors.email}
                             </p>
-                        )}
 
                         <input
                             type="password"
                             name="password"
                             onChange={formik?.handleChange}
+                            value={formik.values.password}
+                            onBlur={formik.handleBlur}
                             placeholder="Password"
                             className="input input-bordered w-full bg-zinc-200" 
                         />
-                        {formik.touched.password && formik.errors.password && (
-                            <p className="text-sm text-error">
-                                {formik.errors.password}
+                        
+                            <p className="text-sm text-error min-h-[1.25rem]">
+                                {(formik.touched.password || formik.submitCount > 0) && formik.errors.password}
                             </p>
-                        )}
 
                         <div className="card-actions justify-end mt-4">
                             <button className="btn btn-primary w-full">

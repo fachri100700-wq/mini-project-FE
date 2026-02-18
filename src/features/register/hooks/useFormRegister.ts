@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import { registerSchema } from "../validations/registerSchema";
 import { useNavigate } from "react-router-dom";
 import { registerApi } from "../api/register.api";
+import toast from "react-hot-toast";
 
 type Role = "customer" | "organizer";
 export function useFormRegister(){
@@ -15,10 +16,23 @@ export function useFormRegister(){
                 password: ''
             },
             validationSchema: registerSchema,
-            onSubmit: async({ email, username, password, role }) => {
-                await registerApi({ email, username, password, role });
+            onSubmit: async({ email, username, password, role }, { setFieldError, setStatus }) => {
+                try {
+                    await registerApi({ email, username, password, role });
 
-                navigate("/login", { replace: true });
+                    toast.success("Account created successfully 🎉")
+
+                    navigate("/login", { replace: true });
+                } catch (err: any) {
+                    const message = err?.response?.data?.message;
+
+                    if (message?.toLowerCase().includes("email")) {
+                        setFieldError("email", message);
+                    } else {
+                        setStatus(message || "Registration Failed");
+                        toast.error(message || "Registration Failed");
+                    }
+                }
             },
         });
 
