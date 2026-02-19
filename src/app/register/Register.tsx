@@ -12,6 +12,10 @@ export default function Register() {
                             border border-zinc-300">
                     <div className="card-body space-y-3">
                         <h2 className="card-title text-2xl justify-center">Register</h2>
+                        <p className="text-sm text-zinc-500 text-center">
+                            Select your role to get started
+                        </p>
+                        
 
                         {/* ROLE SELECTION */}
                         <div className="grid grid-cols-2 gap-4">
@@ -45,10 +49,11 @@ export default function Register() {
                             className="space-y-3"    
                         >
 
+                            <label className="text-sm font-medium">Username</label>
                             <input
                                 type="text"
                                 name="username"
-                                placeholder="Username"
+                                placeholder="e.g. John Doe"
                                 value={formik.values.username}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -59,13 +64,15 @@ export default function Register() {
                                 {(formik.touched.username || formik.submitCount > 0) && formik.errors.username}
                             </p>
 
+
+                            <label className="text-sm font-medium">Email</label>
                             <input
                                 type="email"
                                 name="email"
                                 onChange={formik?.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.email}
-                                placeholder="Email"
+                                placeholder="e.g. John@email.com"
                                 className="input input-bordered w-full bg-zinc-200" 
                             />
 
@@ -73,18 +80,39 @@ export default function Register() {
                                 {(formik.touched.email || formik.submitCount > 0) && formik.errors.email}
                             </p>
 
+
+                            <label className="text-sm font-medium">Password</label>
                             <input
                                 type="password"
                                 name="password"
                                 onChange={formik?.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.password}
-                                placeholder="Password"
+                                placeholder="Enter a secure password"
                                 className="input input-bordered w-full bg-zinc-200" 
                             />
 
                             <p className="text-sm text-error min-h-[1.25rem]">
                                 {(formik.touched.password || formik.submitCount > 0) && formik.errors.password}
+                            </p>
+
+                            <label className="text-sm font-medium">
+                                Referral Code <span className="text-zinc-400">(optional)</span>
+                            </label>
+
+                            <input
+                            type="text"
+                            name="referralCode"
+                            placeholder="Enter referral code (if any)"
+                            value={formik.values.referralCode}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            className="input input-bordered w-full bg-zinc-200"
+                            />
+
+                            <p className="text-sm text-error min-h-[1.25rem]">
+                                {(formik.touched.referralCode || formik.submitCount > 0) &&
+                                    formik.errors.referralCode}
                             </p>
 
                             <div className="card-actions justify-end mt-4">

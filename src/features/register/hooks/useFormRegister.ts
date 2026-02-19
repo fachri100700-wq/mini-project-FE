@@ -3,22 +3,23 @@ import { registerSchema } from "../validations/registerSchema";
 import { useNavigate } from "react-router-dom";
 import { registerApi } from "../api/register.api";
 import toast from "react-hot-toast";
+import type { RegisterDTO } from "../register.dto";
 
-type Role = "customer" | "organizer";
 export function useFormRegister(){
     const navigate = useNavigate();
 
-    const formik = useFormik({
+    const formik = useFormik<RegisterDTO>({
             initialValues: {
-                role: '' as Role,
+                role: '' as RegisterDTO["role"],
                 username: '',
                 email: '',
-                password: ''
+                password: '',
+                referralCode: undefined,
             },
             validationSchema: registerSchema,
-            onSubmit: async({ email, username, password, role }, { setFieldError, setStatus }) => {
+            onSubmit: async({ email, username, password, role, referralCode }, { setFieldError, setStatus }) => {
                 try {
-                    await registerApi({ email, username, password, role });
+                    await registerApi({ email, username, password, role, referralCode });
 
                     toast.success("Account created successfully 🎉")
 

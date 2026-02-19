@@ -16,4 +16,9 @@ export const registerSchema = Yup.object({
   password: Yup.string()
     .min(8, "Password must be at least 8 characters")
     .required("Password is required"),
+
+  referralCode: Yup.string()
+    .max(20, "Referral code is too long")
+    .transform((value) => (value === "" ? undefined : value))
+    .optional(),
 });
