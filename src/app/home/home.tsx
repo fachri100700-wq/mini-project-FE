@@ -1,7 +1,7 @@
 import CategoryCard from "./_component/category-card";
 import Hero from "./_component/hero";
 import Event from "./_component/event";
-import { type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   IoMusicalNotesOutline,
   IoHappyOutline,
@@ -9,30 +9,69 @@ import {
   IoShirtOutline,
   IoGameControllerOutline,
   IoHeartOutline,
+  IoEllipsisHorizontalOutline,
 } from "react-icons/io5";
-
-interface categoryItem {
-  id: number;
-  name: string;
-  count: number;
-  icon: ReactNode;
-}
+import { MdOutlineFestival, MdOutlineSportsVolleyball } from "react-icons/md";
+import { FaTheaterMasks } from "react-icons/fa";
+import { GrWorkshop } from "react-icons/gr";
+import { RiHeartAddLine } from "react-icons/ri";
+import axiosInstance from "../../utils/axios-instance";
+import type { ApiResponse } from "../../types/api-response";
 
 export default function Home() {
-  const categories: categoryItem[] = [
-    { id: 1, name: "Music", count: 12, icon: <IoMusicalNotesOutline /> },
-    { id: 2, name: "Comedy", count: 5, icon: <IoHappyOutline /> },
-    { id: 3, name: "Education", count: 15, icon: <IoBookOutline /> },
-    { id: 4, name: "Fashion", count: 7, icon: <IoShirtOutline /> },
-    { id: 5, name: "Gaming", count: 20, icon: <IoGameControllerOutline /> },
-    { id: 6, name: "Health", count: 10, icon: <IoHeartOutline /> },
-  ];
+  const [event, setEvent] = useState<any[]>([]);
+
+  const getAllEvent = async () => {
+    try {
+      const res = await axiosInstance.get<ApiResponse<any>>("/events");
+      setEvent(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllEvent();
+  }, []);
+
+  const getIcon = (name: string) => {
+    const icons: any = {
+      concert: <IoMusicalNotesOutline />,
+      seminar: <IoBookOutline />,
+      sports: <MdOutlineSportsVolleyball />,
+      workshop: <GrWorkshop />,
+      exhibition: <RiHeartAddLine />,
+      theater: <FaTheaterMasks />,
+      festival: <MdOutlineFestival />,
+    };
+
+    // Pastiin 'name' nya string, terus kecilin semua biar pas sama kunci di atas
+    const key = String(name).toLowerCase();
+
+    return icons[key] || <IoEllipsisHorizontalOutline />;
+  };
+
+  // 2. Itung Kategorinya langsung di sini
+  const categoryCounts: any = {};
+  event.forEach((ev) => {
+    // Ambil namanya, kalau kosong kasih "Other"
+    const name = ev.eventCategory || "Other";
+    categoryCounts[name] = (categoryCounts[name] || 0) + 1;
+  });
+
+  // 3. Ubah jadi array buat di-map
+  const displayCategories = Object.keys(categoryCounts).map((name, i) => ({
+    id: i,
+    name,
+    count: categoryCounts[name],
+    icon: getIcon(name),
+  }));
 
   return (
     <div className="bg-gray-50">
       <Hero />
       <section className="relative flex flex-wrap justify-center gap-4 p-10 items-center -mt-30 md:-mt-20 z-10">
-        {categories.map((item) => (
+        {displayCategories.map((item) => (
           <CategoryCard
             key={item.id}
             name={item.name}

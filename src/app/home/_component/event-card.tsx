@@ -3,6 +3,7 @@ import { IoLocationOutline, IoCalendarOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 
 interface eventProps {
+  id: string
   image: string;
   categories: string;
   month: string;
@@ -14,6 +15,7 @@ interface eventProps {
 }
 
 export default function EventCard({
+  id,
   image,
   categories,
   month,
@@ -25,8 +27,8 @@ export default function EventCard({
 }: eventProps) {
   return (
     <NavLink
-      to="/event-detail"
-      className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 max-w-[300px] cursor-pointer"
+      to={`/event-detail/${id}`}
+      className="block m-2 group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 max-w-[300px] cursor-pointer"
     >
       <div className="relative h-[200px] w-full overflow-hidden">
         <img
@@ -59,7 +61,9 @@ export default function EventCard({
 
         <div className="flex gap-2">
           <IoLocationOutline className="text-[#2563eb]" />
-          <span className="text-xs text-black font-medium italic">{location}</span>
+          <span className="text-xs text-black font-medium italic">
+            {location}
+          </span>
         </div>
 
         <hr className="border-gray-100 mb-4 mt-4" />
