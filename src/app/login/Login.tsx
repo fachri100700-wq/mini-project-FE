@@ -1,4 +1,5 @@
 import { useFormlogin } from "../../features/login/hooks/useFormLogin";
+import { Link } from "react-router-dom";
 
 export default function Login() {
     const { formik } = useFormlogin();
@@ -44,7 +45,14 @@ export default function Login() {
                             <p className="text-sm text-error min-h-[1.25rem]">
                                 {(formik.touched.password || formik.submitCount > 0) && formik.errors.password}
                             </p>
-
+                        
+                        <Link
+                            to="/forgot-password"
+                            className="text-sm text-blue-600 hover:underline text-right"
+                        >
+                            Forgot password?
+                        </Link>
+                        
                         <div className="card-actions justify-end mt-4">
                             <button className="btn btn-primary w-full">
                                 Log In
