@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from './library/root';
+import Home from "./app/home/home";
 import ExploreEvent from './app/exploreEvent/exploreEvent';
 import EventDetail from './app/eventDetail/eventDetail';
 import CreateEvent from './app/create-event/createEvent';
