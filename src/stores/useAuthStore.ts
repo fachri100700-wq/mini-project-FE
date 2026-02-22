@@ -1,17 +1,18 @@
 import { create } from "zustand";
 
-type UseAuthStore = {
+type Auth = {
     username: string;
     role: string;
-    setAuth: ({ username, role }: { username: string; role: string }) => void;
+} | null;
+
+type UseAuthStore = {
+    auth: Auth;
+    setAuth: (auth: Auth) => void;
 };
 
 const useAuthStore = create<UseAuthStore>((set) => ({
-    username: '',
-    role: '',
-    setAuth: ({ username, role }: Pick<UseAuthStore, 'username' | 'role'>) => {
-        set({ username, role});
-    },
+    auth: null,
+    setAuth: (auth: Auth) => set({ auth }),
 }));
 
 export default useAuthStore;

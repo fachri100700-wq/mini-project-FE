@@ -19,7 +19,13 @@ export function useFormRegister(){
             validationSchema: registerSchema,
             onSubmit: async({ email, username, password, role, referralCode }, { setFieldError, setStatus }) => {
                 try {
-                    await registerApi({ email, username, password, role, referralCode });
+                    const payload: RegisterDTO = { email, username, password, role, };
+
+                    if (referralCode?.trim()) {
+                        payload.referralCode = referralCode.trim();
+                    }
+
+                    await registerApi(payload);
 
                     toast.success("Account created successfully 🎉")
 

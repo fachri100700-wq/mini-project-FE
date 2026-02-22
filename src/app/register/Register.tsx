@@ -104,8 +104,11 @@ export default function Register() {
                             type="text"
                             name="referralCode"
                             placeholder="Enter referral code (if any)"
-                            value={formik.values.referralCode}
-                            onChange={formik.handleChange}
+                            value={formik.values.referralCode || ""}
+                            onChange={(e) => {
+                                formik.handleChange(e);
+                                formik.setStatus(undefined);
+                            }}
                             onBlur={formik.handleBlur}
                             className="input input-bordered w-full bg-zinc-200"
                             />
