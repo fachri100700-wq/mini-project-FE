@@ -4,15 +4,14 @@ import { LuGhost } from "react-icons/lu";
 import { BsBuildings } from "react-icons/bs";
 import { IoCalendarOutline, IoLocationOutline } from "react-icons/io5";
 
-// Komponen Internal
 import TabsNavigation from "./_component/tabsNavigation";
 import InformationColumn from "./_component/informationColumn";
 import Loading from "../../component/loading";
 
-// Hook
 import { useGetevent } from "./api/get-by-id.api";
+import useAuthGuard from "../hoc/useAuthGuard";
 
-export default function EventDetail() {
+function EventDetail() {
   const { id } = useParams();
   const { event, loading } = useGetevent(id);
 
@@ -27,7 +26,6 @@ export default function EventDetail() {
     );
   }
 
-  // FIX: Samain jadi ticketType (t-kecil) biar konsisten sama BE & InformationColumn
   const lowestPrice =
     event.ticketType && event.ticketType.length > 0
       ? Math.min(...event.ticketType.map((t: any) => t.price))
@@ -117,3 +115,5 @@ export default function EventDetail() {
     </div>
   );
 }
+
+export default useAuthGuard(EventDetail, ["customer"])
