@@ -4,6 +4,7 @@ import { useReferralInfo } from "../../features/profile/hooks/useReferralInfo";
 import { useCoupons } from "../../features/profile/hooks/useCoupons";
 import { useState } from "react";
 import { FiClipboard } from "react-icons/fi";
+import useAuthGuard from "../hoc/useAuthGuard";
 
 export default function Profile() {
   const profileState = useProfile();

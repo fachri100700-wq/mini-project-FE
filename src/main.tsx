@@ -1,3 +1,4 @@
+import AuthProvider from './providers/AuthProvider';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
@@ -10,6 +11,7 @@ import ForgotPassword from './app/password/ForgotPassword';
 import Profile from './app/profile/Profile';
 import EditProfile from './app/profile/edit/EditProfile';
 import ChangePassword from './app/profile/change-password/ChangePassword';
+import dashboardRoutes from './app/routes/DashboardRoutes';
 
 
 const router = createBrowserRouter([
@@ -28,12 +30,15 @@ const router = createBrowserRouter([
           { path: "change-password", element: <ChangePassword/>}
         ],
       },
+      dashboardRoutes,
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
+    <AuthProvider>
     <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 );
