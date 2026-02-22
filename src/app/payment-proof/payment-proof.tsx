@@ -5,8 +5,9 @@ import axiosInstance from "../.././utils/axios-instance";
 import Loading from "../../component/loading";
 import ImageUpload from "./_component/image-upload";
 import { IoChevronBack, IoCopyOutline } from "react-icons/io5";
+import useAuthGuard from "../hoc/useAuthGuard";
 
-export default function PaymentProof() {
+function PaymentProof() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [booking, setBooking] = useState<any>(null);
@@ -207,3 +208,5 @@ function TransferCard({ label, value, onCopy, isCopyable = true }: any) {
     </div>
   );
 }
+
+export default useAuthGuard(PaymentProof,["customer"])
