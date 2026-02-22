@@ -7,7 +7,7 @@ import ImageUpload from "./_component/image-upload";
 import { IoChevronBack, IoCopyOutline } from "react-icons/io5";
 import useAuthGuard from "../hoc/useAuthGuard";
 
-function PaymentProof() {
+export default function PaymentProof() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [booking, setBooking] = useState<any>(null);
@@ -209,4 +209,3 @@ function TransferCard({ label, value, onCopy, isCopyable = true }: any) {
   );
 }
 
-export default useAuthGuard(PaymentProof,["customer"])
