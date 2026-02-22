@@ -4,7 +4,7 @@ import useAuthGuard from "../../../app/hoc/useAuthGuard";
 import toast from "react-hot-toast";
 import type { OrganizerProfile, UpdateOrganizerProfilePayload } from "../types";
 
-function EditProfilePage() {
+export default function EditProfilePage() {
   const [profile, setProfile] = useState<OrganizerProfile | null>(null);
   const [formData, setFormData] = useState<UpdateOrganizerProfilePayload>({});
   const [loading, setLoading] = useState(true);
@@ -59,12 +59,12 @@ function EditProfilePage() {
         </div>
 
         <div className="form-control">
-          <label className="label">Phone</label>
+          <label className="label">Bio</label>
           <input
             type="text"
             className="input input-bordered"
-            value={formData.phone || ""}
-            onChange={e => handleChange("phone", e.target.value)}
+            value={formData.bio || ""}
+            onChange={e => handleChange("bio", e.target.value)}
           />
         </div>
 
@@ -73,8 +73,8 @@ function EditProfilePage() {
           <input
             type="text"
             className="input input-bordered"
-            value={formData.organizationName || ""}
-            onChange={e => handleChange("organizationName", e.target.value)}
+            value={formData.displayName || ""}
+            onChange={e => handleChange("displayName", e.target.value)}
           />
         </div>
       </div>
@@ -91,5 +91,3 @@ function EditProfilePage() {
     </div>
   );
 }
-
-export default useAuthGuard(EditProfilePage, ["organizer"]);

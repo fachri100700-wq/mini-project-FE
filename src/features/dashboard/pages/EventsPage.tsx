@@ -4,7 +4,7 @@ import type { OrganizerEvent } from "../types";
 import { useNavigate } from "react-router-dom";
 import useAuthGuard from "../../../app/hoc/useAuthGuard";
 
-function OrganizerEventsPage() {
+export default function OrganizerEventsPage() {
   const [events, setEvents] = useState<OrganizerEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -85,5 +85,3 @@ function OrganizerEventsPage() {
     </div>
   );
 }
-
-export default useAuthGuard(OrganizerEventsPage, ["organizer"]);

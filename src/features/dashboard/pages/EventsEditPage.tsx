@@ -8,7 +8,7 @@ import type { OrganizerEventDetail, UpdateOrganizerEventPayload } from "../types
 import useAuthGuard from "../../../app/hoc/useAuthGuard";
 import toast from "react-hot-toast";
 
-function OrganizerEventDetailPage() {
+export default function OrganizerEventDetailPage() {
   const { eventId } = useParams<{ eventId: string }>();
   const navigate = useNavigate();
 
@@ -145,5 +145,3 @@ function OrganizerEventDetailPage() {
     </div>
   );
 }
-
-export default useAuthGuard(OrganizerEventDetailPage, ["organizer"]);

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { FiClipboard } from "react-icons/fi";
 import useAuthGuard from "../hoc/useAuthGuard";
 
-function Profile() {
+export default function Profile() {
   const profileState = useProfile();
   const { data: referralInfo, loading: loadingReferral, nextExpiringReward } = useReferralInfo();
   const { data: coupons, loading: loadingCoupons } = useCoupons();
@@ -178,5 +178,3 @@ function Profile() {
     </div>
   );
 }
-
-export default useAuthGuard(Profile, ["customer"]);

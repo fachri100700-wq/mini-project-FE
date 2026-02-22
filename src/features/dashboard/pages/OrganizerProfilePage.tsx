@@ -3,7 +3,7 @@ import { getOrganizerProfile } from "../api/OrganizerProfilePage.api";
 import useAuthGuard from "../../../app/hoc/useAuthGuard";
 import type { OrganizerProfile } from "../types";
 
-function ProfilePage() {
+export default function ProfilePage() {
   const [profile, setProfile] = useState<OrganizerProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -32,13 +32,13 @@ function ProfilePage() {
         </div>
 
         <div>
-          <label className="label">Phone</label>
-          <div className="p-2 border rounded">{profile.phone || "-"}</div>
+          <label className="label">Bio</label>
+          <div className="p-2 border rounded">{profile.bio || "-"}</div>
         </div>
 
         <div>
           <label className="label">Organization Name</label>
-          <div className="p-2 border rounded">{profile.organizationName || "-"}</div>
+          <div className="p-2 border rounded">{profile.displayName || "-"}</div>
         </div>
       </div>
 
@@ -49,15 +49,7 @@ function ProfilePage() {
         >
           Edit Profile
         </button>
-        <button
-          className="btn btn-outline"
-          onClick={() => window.location.href = "/dashboard/profile/change-password"}
-        >
-          Change Password
-        </button>
       </div>
     </div>
   );
 }
-
-export default useAuthGuard(ProfilePage, ["organizer"]);

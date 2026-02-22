@@ -4,7 +4,7 @@ import { getTransactions, updateTransactionStatus } from "../api/OrganizerTransa
 import useAuthGuard from "../../../app/hoc/useAuthGuard";
 import toast from "react-hot-toast";
 
-function TransactionsPage() {
+export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -133,5 +133,3 @@ function TransactionsPage() {
     </div>
   );
 }
-
-export default useAuthGuard(TransactionsPage, ["organizer"]);
