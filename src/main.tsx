@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from './library/root';
+import PaymentProof from './app/payment-proof/payment-proof';
 import Home from "./app/home/home";
 import ExploreEvent from './app/exploreEvent/exploreEvent';
 import EventDetail from './app/eventDetail/eventDetail';
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       { index: true, element: <Home /> },
+      { path: "/payment-proof/:id", element: <PaymentProof /> },
       { path: "/explore-event", element: <ExploreEvent /> },
       { path: "/event-detail/:id", element: <EventDetail /> },
       { path: "/create-event", element: <CreateEvent /> },
