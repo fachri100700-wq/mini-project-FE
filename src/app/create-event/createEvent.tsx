@@ -8,8 +8,9 @@ import { EventCategory, EventType } from "../../types/enum-event";
 import axiosInstance from "../../utils/axios-instance";
 import { createEventSchema } from "../../features/event/create-event-validation-schema";
 import { useEffect } from "react";
+import useAuthGuard from "../hoc/useAuthGuard";
 
-export default function CreateEvent() {
+function CreateEvent() {
   const formik = useFormik({
     initialValues: {
       eventName: "",
@@ -116,3 +117,5 @@ export default function CreateEvent() {
     </main>
   );
 }
+
+export default useAuthGuard(CreateEvent, ["organizer"])
