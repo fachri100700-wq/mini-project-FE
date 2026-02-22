@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useEditProfile } from "../../../features/profile/edit-profile/hooks/useEditProfile";
 
 export default function EditProfile() {
-  const { state, formik } = useEditProfile();
+  const { state, formik, handleAvatarUpload } = useEditProfile();
 
   if (state.status === "loading") {
     return (
@@ -34,13 +34,12 @@ export default function EditProfile() {
                 className="w-24 h-24 rounded-full border"
               />
               <input
-                type="text"
-                name="avatarUrl"
-                placeholder="Avatar URL"
-                className="input input-bordered w-full bg-zinc-200"
-                value={formik.values.avatarUrl}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  if (e.target.files?.[0]) handleAvatarUpload(e.target.files[0]);
+                }}
+                className="file-input file-input-bordered w-full bg-zinc-200"
               />
               <p className="text-sm text-error min-h-[1.25rem]">
                 {(formik.touched.avatarUrl || formik.submitCount > 0) && formik.errors.avatarUrl}

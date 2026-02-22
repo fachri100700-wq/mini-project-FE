@@ -1,4 +1,3 @@
-// src/features/profile/api/updateProfile.api.ts
 import axiosInstance from "../../../../app/utils/axiosInstance";
 import type { ApiResponse } from "../../../../types/api";
 import type { Profile } from "../../type";

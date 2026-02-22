@@ -7,6 +7,7 @@ import { getProfileApi } from "../../api/profile.api";
 import { updateProfileApi } from "../api/updateProfile.api";
 import type { Profile } from "../../type";
 import { editProfileSchema } from "../validations/editProfileSchema";
+import { updateAvatarApi } from "../api/profileAvatar.api";
 
 type UseEditProfileState =
   | { status: "loading" }
@@ -85,8 +86,21 @@ export function useEditProfile() {
     },
   });
 
+  const handleAvatarUpload = async (file: File) => {
+    if (state.status !== "ready") return;
+
+    try {
+      const data = await updateAvatarApi(file);
+      formik.setFieldValue("avatarUrl", data.avatarUrl);
+      toast.success("Avatar uploaded successfully!");
+    } catch (err: any) {
+      toast.error(err.message || "Avatar upload failed");
+    }
+  };
+
   return {
     state,
     formik,
+    handleAvatarUpload,
   };
 }
