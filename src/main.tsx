@@ -10,6 +10,7 @@ import ForgotPassword from './app/password/ForgotPassword';
 import Profile from './app/profile/Profile';
 import EditProfile from './app/profile/edit/EditProfile';
 import ChangePassword from './app/profile/change-password/ChangePassword';
+import dashboardRoutes from './app/routes/DashboardRoutes';
 
 
 const router = createBrowserRouter([
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
           { path: "change-password", element: <ChangePassword/>}
         ],
       },
+      dashboardRoutes,
     ],
   },
 ]);
