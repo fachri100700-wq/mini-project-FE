@@ -11,7 +11,7 @@ import Loading from "../../component/loading";
 import { useGetevent } from "./api/get-by-id.api";
 import useAuthGuard from "../hoc/useAuthGuard";
 
-function EventDetail() {
+export default function EventDetail() {
   const { id } = useParams();
   const { event, loading } = useGetevent(id);
 
@@ -115,5 +115,3 @@ function EventDetail() {
     </div>
   );
 }
-
-export default useAuthGuard(EventDetail, ["customer"])
