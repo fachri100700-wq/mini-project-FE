@@ -10,7 +10,7 @@ import { createEventSchema } from "../../features/event/create-event-validation-
 import { useEffect } from "react";
 import useAuthGuard from "../hoc/useAuthGuard";
 
-function CreateEvent() {
+export default function CreateEvent() {
   const formik = useFormik({
     initialValues: {
       eventName: "",
@@ -118,4 +118,3 @@ function CreateEvent() {
   );
 }
 
-export default useAuthGuard(CreateEvent, ["organizer"])
