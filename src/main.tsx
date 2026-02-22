@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from './library/root';
+import EventDetail from './app/eventDetail/eventDetail';
 import CreateEvent from './app/create-event/createEvent';
 import AdminVerification from './app/admin-vertification/admin-vertification';
 import Register from './app/register/Register';
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       { index: true, element: <Home /> },
+      { path: "/event-detail/:id", element: <EventDetail /> },
       { path: "/create-event", element: <CreateEvent /> },
       { path: "/admin-vertification", element: <AdminVerification /> },
       { path: "register", element: <Register /> },
