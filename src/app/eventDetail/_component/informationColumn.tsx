@@ -5,6 +5,7 @@ import { IoChevronForward } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axiosInstance from "../../../utils/axios-instance";
+import useAuthStore from "../../../stores/useAuthStore";
 
 const BookingSchema = Yup.object().shape({
   selectedTickets: Yup.object().test(
@@ -17,6 +18,8 @@ const BookingSchema = Yup.object().shape({
 
 export default function InformationColumn({ event }: { event: any }) {
   const navigate = useNavigate();
+
+  const userId = useAuthStore((state) => state.auth?.id);
 
   const formik = useFormik({
     initialValues: {
@@ -37,7 +40,7 @@ export default function InformationColumn({ event }: { event: any }) {
           ticketTypeId: ticketId,
           quantity: values.selectedTickets[ticketId],
           promoId: values.promoId || null,
-          userId: "87a022c5-5e12-484a-a3d8-4d7e68c9943c", // Hardcoded sesuai kebutuhan lu Ri
+          userId, // Hardcoded sesuai kebutuhan lu Ri
         };
 
         const { data } = await axiosInstance.post("/bookings", payload);
