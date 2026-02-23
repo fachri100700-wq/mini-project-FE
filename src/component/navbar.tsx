@@ -7,10 +7,14 @@ import {
 } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
+import useAuthStore from "../stores/useAuthStore";
+import { useLogout } from "../features/login/hooks/useLogout";
 
 export default function Navbar() {
   const { pathname } = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
+  const { auth } = useAuthStore();
+  const logout = useLogout();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,13 +43,15 @@ export default function Navbar() {
         }`}
       >
         {/* 1. LOGO */}
-        <div className="flex items-center gap-2 cursor-pointer group">
+        <NavLink 
+          to="/"
+          className="flex items-center gap-2 cursor-pointer group">
           <span
             className={`text-xl font-black tracking-tighter uppercase transition-colors ${isScrolled ? "text-black" : "text-white"}`}
           >
             Event<span className="text-[#2563eb]">aja.</span>
           </span>
-        </div>
+        </NavLink>
 
         {/* 2. MIDDLE MENU */}
         <div
@@ -58,31 +64,47 @@ export default function Navbar() {
             <IoCompassOutline className="text-lg text-[#2563eb]" />
             <span>Explore Event</span>
           </NavLink>
-          <div className="flex items-center gap-2 cursor-pointer hover:text-[#2563eb] transition-colors group">
+          <NavLink
+            to="/create-event"
+            className="flex items-center gap-2 cursor-pointer hover:text-[#2563eb] transition-colors group"
+          >
             <IoCalendarOutline className="text-xl text-[#2563eb]" />
             <span>Create Event</span>
-          </div>
+          </NavLink>
         </div>
 
         {/* 3. RIGHT SECTION */}
-        <div className="flex items-center gap-8">
-          <button
-            className={`text-xl transition-colors ${isScrolled ? "text-gray-400" : "text-white"}`}
-          ></button>
-
-          <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3">
+          {auth ? (
             <button
-              className={`px-5 py-2 font-bold text-sm rounded-full transition-all cursor-pointer ${isScrolled ? "text-black hover:bg-gray-200" : "text-white hover:bg-white/20"}`}
+              onClick={logout}
+              className={`px-5 py-2 font-bold text-sm rounded-full transition-all cursor-pointer ${
+                isScrolled ? "text-black hover:bg-gray-200" : "text-white hover:bg-white/20"
+              }`}
             >
-              Log In
+              Logout
             </button>
-            <div
-              className={`hidden md:block h-6 w-[1px] ${isScrolled ? "bg-gray-200" : "bg-white/30"}`}
-            ></div>
-            <button className="bg-[#2563eb] text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-[#1a47aa] transition-all cursor-pointer">
-              Sign Up
-            </button>
-          </div>
+          ) : (
+            <>
+              <NavLink
+                to="/login"
+                className={`px-5 py-2 font-bold text-sm rounded-full transition-all cursor-pointer ${
+                  isScrolled ? "text-black hover:bg-gray-200" : "text-white hover:bg-white/20"
+                }`}
+              >
+                Log In
+              </NavLink>
+              <div
+                className={`hidden md:block h-6 w-[1px] ${isScrolled ? "bg-gray-200" : "bg-white/30"}`}
+              ></div>
+              <NavLink
+                to="/register"
+                className="bg-[#2563eb] text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-[#1a47aa] transition-all cursor-pointer"
+              >
+                Sign Up
+              </NavLink>
+            </>
+          )}
         </div>
       </nav>
 

@@ -5,6 +5,7 @@ import Navbar from "../component/navbar";
 export default function Root() {
   return (
     <>
+      <Navbar />
       <Toaster position="top-right" />
       <div>
         <Outlet />
