@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 type Auth = {
+    id: string;
     username: string;
     role: string;
 } | null;
