@@ -7,12 +7,23 @@ import { toast } from "react-toastify";
 import axiosInstance from "../../../utils/axios-instance";
 import useAuthStore from "../../../stores/useAuthStore";
 
+const MAX_TICKETS_PER_TYPE = 10;
+
 const BookingSchema = Yup.object().shape({
-  selectedTickets: Yup.object().test(
-    "at-least-one",
-    "Please select at least one ticket to proceed.",
-    (value) => Object.values(value || {}).some((qty) => (qty as number) > 0),
-  ),
+  selectedTickets: Yup.object()
+    .test(
+      "at-least-one",
+      "Please select at least one ticket to proceed.",
+      (value) => Object.values(value || {}).some((qty) => (qty as number) > 0),
+    )
+    .test(
+      "max-per-type",
+      `Maximum ${MAX_TICKETS_PER_TYPE} tickets per type.`,
+      (value) =>
+        Object.values(value || {}).every(
+          (qty) => (qty as number) <= MAX_TICKETS_PER_TYPE,
+        ),
+    ),
   promoId: Yup.string().nullable(),
 });
 
@@ -130,7 +141,7 @@ export default function InformationColumn({ event }: { event: any }) {
                     onClick={() => {
                       const current =
                         formik.values.selectedTickets[ticket.id] || 0;
-                      if (current < ticket.seatAvailable) {
+                      if (current < ticket.seatAvailable && current < MAX_TICKETS_PER_TYPE) {
                         formik.setFieldValue(
                           `selectedTickets.${ticket.id}`,
                           current + 1,
@@ -159,11 +170,10 @@ export default function InformationColumn({ event }: { event: any }) {
                 key={p.id}
                 type="button"
                 onClick={() => formik.setFieldValue("promoId", p.id)}
-                className={`px-3 py-2 rounded-xl text-[10px] font-bold border transition-all ${
-                  formik.values.promoId === p.id
+                className={`px-3 py-2 rounded-xl text-[10px] font-bold border transition-all ${formik.values.promoId === p.id
                     ? "bg-blue-600 border-blue-600 text-white"
                     : "bg-blue-50 border-blue-100 text-blue-600"
-                }`}
+                  }`}
               >
                 {" "}
                 Save {p.discAmount.toLocaleString("id-ID")}{" "}
