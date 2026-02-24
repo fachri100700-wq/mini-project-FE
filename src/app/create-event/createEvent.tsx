@@ -9,8 +9,11 @@ import axiosInstance from "../../utils/axios-instance";
 import { createEventSchema } from "../../features/event/create-event-validation-schema";
 import { useEffect } from "react";
 import useAuthGuard from "../hoc/useAuthGuard";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateEvent() {
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       eventName: "",
@@ -61,10 +64,11 @@ export default function CreateEvent() {
         }
 
         const res = await axiosInstance.post("/events", fd);
-        console.log("Success:", res.data);
-        alert("Event created successfully!");
+        toast.success("Event created successfully!");
+        navigate("/");
       } catch (error) {
         console.log(error);
+        toast.error("Event created failed!");
       }
     },
   });
