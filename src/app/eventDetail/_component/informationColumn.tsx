@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { IoChevronForward } from "react-icons/io5";
@@ -30,7 +30,45 @@ const BookingSchema = Yup.object().shape({
 export default function InformationColumn({ event }: { event: any }) {
   const navigate = useNavigate();
 
-  const userId = useAuthStore((state) => state.auth?.id);
+  const auth = useAuthStore((state) => state.auth);
+
+  // State for coupon & referral reward
+  const [coupons, setCoupons] = useState<any[]>([]);
+  const [referralInfo, setReferralInfo] = useState<any>(null);
+  const [useCoupon, setUseCoupon] = useState(false);
+  const [useReward, setUseReward] = useState(false);
+
+  // Fetch coupons & referral rewards
+  useEffect(() => {
+    if (!auth) return;
+
+    const fetchDiscounts = async () => {
+      try {
+        const [couponRes, rewardRes] = await Promise.all([
+          axiosInstance.get("/profile/coupons"),
+          axiosInstance.get("/profile/referrals"),
+        ]);
+        setCoupons(couponRes.data.data || []);
+        setReferralInfo(rewardRes.data.data || null);
+      } catch (err) {
+        console.log("Failed to fetch discounts", err);
+      }
+    };
+    fetchDiscounts();
+  }, [auth]);
+
+  const activeCoupon = coupons.length > 0 ? coupons[0] : null;
+  const hasAvailableReward =
+    referralInfo &&
+    referralInfo.availablePoints > 0 &&
+    referralInfo.history?.some(
+      (r: any) => r.points > 0 && new Date(r.expireDate) > new Date(),
+    );
+  const activeReward = hasAvailableReward
+    ? referralInfo.history.find(
+      (r: any) => r.points > 0 && new Date(r.expireDate) > new Date(),
+    )
+    : null;
 
   const formik = useFormik({
     initialValues: {
@@ -46,13 +84,19 @@ export default function InformationColumn({ event }: { event: any }) {
 
         if (!ticketId) return;
 
-        const payload = {
+        const payload: any = {
           eventId: event.id,
           ticketTypeId: ticketId,
           quantity: values.selectedTickets[ticketId],
           promoId: values.promoId || null,
-          userId, // Hardcoded sesuai kebutuhan lu Ri
         };
+
+        if (useCoupon && activeCoupon) {
+          payload.couponId = activeCoupon.id;
+        }
+        if (useReward && activeReward) {
+          payload.referralRewardId = activeReward.id;
+        }
 
         const { data } = await axiosInstance.post("/bookings", payload);
         toast.success("Booking successful!");
@@ -75,8 +119,11 @@ export default function InformationColumn({ event }: { event: any }) {
   const activePromo = event?.promotion?.find(
     (p: any) => p.id === formik.values.promoId,
   );
-  const discountAmount = activePromo ? activePromo.discAmount : 0;
-  const finalTotal = Math.max(0, subtotal - discountAmount);
+  const promoDiscount = activePromo ? activePromo.discAmount : 0;
+  const couponDiscount = useCoupon && activeCoupon ? activeCoupon.discount : 0;
+  const rewardDiscount = useReward && activeReward ? activeReward.points : 0;
+  const totalDiscount = promoDiscount + couponDiscount + rewardDiscount;
+  const finalTotal = Math.max(0, subtotal - totalDiscount);
   const totalQty = Object.values(formik.values.selectedTickets).reduce(
     (a, b) => a + b,
     0,
@@ -171,8 +218,8 @@ export default function InformationColumn({ event }: { event: any }) {
                 type="button"
                 onClick={() => formik.setFieldValue("promoId", p.id)}
                 className={`px-3 py-2 rounded-xl text-[10px] font-bold border transition-all ${formik.values.promoId === p.id
-                    ? "bg-blue-600 border-blue-600 text-white"
-                    : "bg-blue-50 border-blue-100 text-blue-600"
+                  ? "bg-blue-600 border-blue-600 text-white"
+                  : "bg-blue-50 border-blue-100 text-blue-600"
                   }`}
               >
                 {" "}
@@ -189,6 +236,86 @@ export default function InformationColumn({ event }: { event: any }) {
           />
         </div>
 
+        {/* COUPON TOGGLE */}
+        <div className="pt-6 border-t border-gray-100 mt-6">
+          <p className="text-xs font-black text-gray-800 mb-3">Coupon</p>
+          {!activeCoupon && (
+            <p className="text-red-500 text-[10px] font-bold mb-2">
+              You don't have any coupon available
+            </p>
+          )}
+          <div
+            className={`flex items-center justify-between bg-gray-50/50 p-4 rounded-3xl border border-gray-100 ${!activeCoupon ? "opacity-50" : ""
+              }`}
+          >
+            <div className="flex-1">
+              {activeCoupon ? (
+                <>
+                  <p className="text-sm font-bold text-gray-800">
+                    {activeCoupon.code}
+                  </p>
+                  <p className="text-[10px] text-green-600 font-bold">
+                    - IDR {activeCoupon.discount.toLocaleString("id-ID")}
+                  </p>
+                </>
+              ) : (
+                <p className="text-sm text-gray-400">No coupon</p>
+              )}
+            </div>
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={useCoupon}
+                disabled={!activeCoupon}
+                onChange={(e) => setUseCoupon(e.target.checked)}
+                className="sr-only peer"
+              />
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 peer-disabled:opacity-50 peer-disabled:cursor-not-allowed"></div>
+            </label>
+          </div>
+        </div>
+
+        {/* REFERRAL REWARD TOGGLE */}
+        <div className="pt-6 border-t border-gray-100 mt-6">
+          <p className="text-xs font-black text-gray-800 mb-3">
+            Referral Reward
+          </p>
+          {!hasAvailableReward && (
+            <p className="text-red-500 text-[10px] font-bold mb-2">
+              You don't have any referral reward available
+            </p>
+          )}
+          <div
+            className={`flex items-center justify-between bg-gray-50/50 p-4 rounded-3xl border border-gray-100 ${!hasAvailableReward ? "opacity-50" : ""
+              }`}
+          >
+            <div className="flex-1">
+              {hasAvailableReward && activeReward ? (
+                <>
+                  <p className="text-sm font-bold text-gray-800">
+                    Points: {activeReward.points.toLocaleString("id-ID")}
+                  </p>
+                  <p className="text-[10px] text-green-600 font-bold">
+                    - IDR {activeReward.points.toLocaleString("id-ID")}
+                  </p>
+                </>
+              ) : (
+                <p className="text-sm text-gray-400">No reward points</p>
+              )}
+            </div>
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={useReward}
+                disabled={!hasAvailableReward}
+                onChange={(e) => setUseReward(e.target.checked)}
+                className="sr-only peer"
+              />
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 peer-disabled:opacity-50 peer-disabled:cursor-not-allowed"></div>
+            </label>
+          </div>
+        </div>
+
         {/* SUMMARY */}
         <div className="mt-8 pt-6 border-t border-dashed border-gray-200 space-y-2">
           <div className="flex justify-between text-xs font-medium text-gray-500">
@@ -197,11 +324,27 @@ export default function InformationColumn({ event }: { event: any }) {
               IDR {subtotal.toLocaleString("id-ID")}
             </span>
           </div>
-          {discountAmount > 0 && (
+          {promoDiscount > 0 && (
             <div className="flex justify-between text-xs font-medium text-green-600">
-              <span>Discount</span>
+              <span>Promo Discount</span>
               <span className="font-bold">
-                - IDR {discountAmount.toLocaleString("id-ID")}
+                - IDR {promoDiscount.toLocaleString("id-ID")}
+              </span>
+            </div>
+          )}
+          {useCoupon && couponDiscount > 0 && (
+            <div className="flex justify-between text-xs font-medium text-green-600">
+              <span>Coupon Discount</span>
+              <span className="font-bold">
+                - IDR {couponDiscount.toLocaleString("id-ID")}
+              </span>
+            </div>
+          )}
+          {useReward && rewardDiscount > 0 && (
+            <div className="flex justify-between text-xs font-medium text-green-600">
+              <span>Referral Reward</span>
+              <span className="font-bold">
+                - IDR {rewardDiscount.toLocaleString("id-ID")}
               </span>
             </div>
           )}
