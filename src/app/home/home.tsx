@@ -17,6 +17,7 @@ import { GrWorkshop } from "react-icons/gr";
 import { RiHeartAddLine } from "react-icons/ri";
 import axiosInstance from "../../utils/axios-instance";
 import type { ApiResponse } from "../../types/api-response";
+import { EventCategory } from "../../types/enum-event";
 
 export default function Home() {
   const [event, setEvent] = useState<any[]>([]);
@@ -43,33 +44,33 @@ export default function Home() {
       exhibition: <RiHeartAddLine />,
       theater: <FaTheaterMasks />,
       festival: <MdOutlineFestival />,
+      other: <IoEllipsisHorizontalOutline />,
     };
 
-    // Pastiin 'name' nya string, terus kecilin semua biar pas sama kunci di atas
     const key = String(name).toLowerCase();
 
     return icons[key] || <IoEllipsisHorizontalOutline />;
   };
 
-  // 2. Itung Kategorinya langsung di sini
-  const categoryCounts: any = {};
+  // 2. Itung jumlah event per kategori dari data API
+  const categoryCounts: Record<string, number> = {};
   event.forEach((ev) => {
-    // Ambil namanya, kalau kosong kasih "Other"
-    const name = ev.eventCategory || "Other";
+    const name = ev.eventCategory || "OTHER";
     categoryCounts[name] = (categoryCounts[name] || 0) + 1;
   });
 
-  // 3. Ubah jadi array buat di-map
-  const displayCategories = Object.keys(categoryCounts).map((name, i) => ({
+  // 3. Tampilkan SEMUA kategori dari enum, dengan count 0 jika belum ada event
+  const allCategoryKeys = Object.values(EventCategory);
+  const displayCategories = allCategoryKeys.map((name, i) => ({
     id: i,
     name,
-    count: categoryCounts[name],
+    count: categoryCounts[name] || 0,
     icon: getIcon(name),
   }));
 
   return (
     <div className="bg-gray-50">
-      <Hero/>
+      <Hero />
       <section className="relative flex flex-wrap justify-center gap-4 p-10 items-center -mt-30 md:-mt-20 z-10">
         {displayCategories.map((item) => (
           <CategoryCard
