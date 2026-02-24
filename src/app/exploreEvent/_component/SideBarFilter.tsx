@@ -3,8 +3,11 @@ import { IoFilterOutline } from "react-icons/io5";
 type Props = {
   categories: string[];
   availableCategories: string[];
+  location: string;
+  availableLocations: string[];
   type: string;
   onCategoryChange: (val: string[]) => void;
+  onLocationChange: (val: string) => void;
   onTypeChange: (val: string) => void;
   onApply: () => void;
   onReset: () => void;
@@ -13,15 +16,18 @@ type Props = {
 export default function SideBarFilter({
   categories,
   availableCategories,
+  location,
+  availableLocations,
   type,
   onCategoryChange,
+  onLocationChange,
   onTypeChange,
   onApply,
   onReset,
 }: Props) {
   return (
     <aside className="hidden md:block w-64">
-      <div className="bg-white p-6 rounded-2xl shadow sticky top-12">
+      <div className="bg-white p-6 rounded-2xl shadow">
         <div className="flex items-center gap-2 mb-6">
           <IoFilterOutline className="text-black" />
           <h3 className="font-bold text-lg text-black">Filters</h3>
@@ -58,6 +64,25 @@ export default function SideBarFilter({
           </div>
         </div>
 
+        {/* LOCATION */}
+        <div className="mb-6">
+          <h4 className="text-sm text-gray-400 mb-3 font-semibold tracking-wider">
+            LOCATION
+          </h4>
+          <select
+            value={location}
+            onChange={(e) => onLocationChange(e.target.value)}
+            className="w-full p-2 rounded-lg border border-gray-200 text-sm text-gray-700 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none"
+          >
+            <option value="">All Locations</option>
+            {availableLocations.map((loc) => (
+              <option key={loc} value={loc}>
+                {loc}
+              </option>
+            ))}
+          </select>
+        </div>
+
         {/* TYPE */}
         <div className="mb-6">
           <h4 className="text-sm text-gray-400 mb-3 font-semibold tracking-wider">
@@ -66,21 +91,19 @@ export default function SideBarFilter({
           <div className="flex gap-2">
             <button
               onClick={() => onTypeChange(type === "FREE" ? "" : "FREE")}
-              className={`flex-1 py-2 rounded text-sm font-medium transition-all ${
-                type === "FREE"
+              className={`flex-1 py-2 rounded text-sm font-medium transition-all ${type === "FREE"
                   ? "bg-blue-600 text-white shadow-md shadow-blue-100"
                   : "text-gray-500 border border-gray-200 hover:border-blue-300"
-              }`}
+                }`}
             >
               Free
             </button>
             <button
               onClick={() => onTypeChange(type === "PAID" ? "" : "PAID")}
-              className={`flex-1 py-2 rounded text-sm font-medium transition-all ${
-                type === "PAID"
+              className={`flex-1 py-2 rounded text-sm font-medium transition-all ${type === "PAID"
                   ? "bg-blue-600 text-white shadow-md shadow-blue-100"
                   : "text-gray-500 border border-gray-200 hover:border-blue-300"
-              }`}
+                }`}
             >
               Paid
             </button>

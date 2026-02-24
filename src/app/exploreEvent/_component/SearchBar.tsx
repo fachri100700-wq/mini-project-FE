@@ -7,8 +7,11 @@ type Props = {
   onSearch: (val: string) => void;
   categories: string[];
   availableCategories: string[];
+  location: string;
+  availableLocations: string[];
   type: string;
   onCategoryChange: (val: string[]) => void;
+  onLocationChange: (val: string) => void;
   onTypeChange: (val: string) => void;
   onApply: () => void;
   onReset: () => void;
@@ -19,8 +22,11 @@ export default function SearchBar({
   onSearch,
   categories,
   availableCategories,
+  location,
+  availableLocations,
   type,
   onCategoryChange,
+  onLocationChange,
   onTypeChange,
   onApply,
   onReset,
@@ -78,16 +84,34 @@ export default function SearchBar({
                         onCategoryChange([...categories, item]);
                       }
                     }}
-                    className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
-                      categories.includes(item)
+                    className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${categories.includes(item)
                         ? "bg-blue-600 text-white"
                         : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                    }`}
+                      }`}
                   >
                     {item}
                   </button>
                 ))}
               </div>
+            </div>
+
+            {/* LOCATION FILTER - MOBILE */}
+            <div className="mb-6">
+              <h4 className="text-xs font-bold text-gray-400 mb-4 tracking-widest">
+                LOCATION
+              </h4>
+              <select
+                value={location}
+                onChange={(e) => onLocationChange(e.target.value)}
+                className="w-full p-3 rounded-xl border border-gray-100 text-sm text-gray-700 bg-gray-50 focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none"
+              >
+                <option value="">All Locations</option>
+                {availableLocations.map((loc) => (
+                  <option key={loc} value={loc}>
+                    {loc}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="mb-6">
@@ -97,21 +121,19 @@ export default function SearchBar({
               <div className="flex gap-2">
                 <button
                   onClick={() => onTypeChange("FREE")}
-                  className={`flex-1 py-3 rounded-xl text-sm font-bold ${
-                    type === "FREE"
+                  className={`flex-1 py-3 rounded-xl text-sm font-bold ${type === "FREE"
                       ? "bg-blue-600 text-white shadow-lg shadow-blue-100"
                       : "bg-gray-50 text-gray-500 border border-gray-100"
-                  }`}
+                    }`}
                 >
                   Free
                 </button>
                 <button
                   onClick={() => onTypeChange("PAID")}
-                  className={`flex-1 py-3 rounded-xl text-sm font-bold ${
-                    type === "PAID"
+                  className={`flex-1 py-3 rounded-xl text-sm font-bold ${type === "PAID"
                       ? "bg-blue-600 text-white shadow-lg shadow-blue-100"
                       : "bg-gray-50 text-gray-500 border border-gray-100"
-                  }`}
+                    }`}
                 >
                   Paid
                 </button>

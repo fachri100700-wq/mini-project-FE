@@ -1,30 +1,40 @@
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import SideBarFilter from "./_component/SideBarFilter";
 import EventCard from "../home/_component/event-card";
 import SearchBar from "./_component/SearchBar";
 import axiosInstance from "../../utils/axios-instance";
 
 export default function ExploreEvent() {
+  const [searchParams] = useSearchParams();
   const [event, setEvent] = useState<any[]>([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(searchParams.get("search") || "");
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [availableLocations, setAvailableLocations] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>(
+    searchParams.get("category") ? [searchParams.get("category")!] : [],
+  );
+  const [location, setLocation] = useState(searchParams.get("location") || "");
   const [type, setType] = useState<string>("");
 
   const [page, setPage] = useState<number>(1);
   const [limit] = useState<number>(10);
   const [totalPage, setTotalPage] = useState<number>(0);
 
-  const getInitialCategories = async () => {
+  const getInitialFilters = async () => {
     try {
-      const res = await axiosInstance.get(`/events?limit=100`); // Ambil banyak data buat list kategori
+      const res = await axiosInstance.get(`/events?limit=100`);
       const allEvents = res.data.data;
       const uniqueCategories = Array.from(
         new Set(allEvents.map((item: any) => item.eventCategory)),
       ) as string[];
+      const uniqueLocations = Array.from(
+        new Set(allEvents.map((item: any) => item.location)),
+      ) as string[];
       setAvailableCategories(uniqueCategories);
+      setAvailableLocations(uniqueLocations);
     } catch (err) {
-      console.error("Failed to fetch categories", err);
+      console.error("Failed to fetch filters", err);
     }
   };
 
@@ -37,6 +47,7 @@ export default function ExploreEvent() {
         queryParts.push(`category=${categories[0]}`);
       }
       if (type) queryParts.push(`type=${type}`);
+      if (location) queryParts.push(`location=${location}`);
 
       queryParts.push(`page=${page}`);
       queryParts.push(`limit=${limit}`);
@@ -54,12 +65,20 @@ export default function ExploreEvent() {
   };
 
   useEffect(() => {
-    getInitialCategories();
+    getInitialFilters();
   }, []);
 
+  // Re-fetch when search, page, or URL params change
   useEffect(() => {
     getAllEvent();
   }, [search, page]);
+
+  // On first load, trigger a fetch if there are URL params
+  useEffect(() => {
+    if (searchParams.get("search") || searchParams.get("category") || searchParams.get("location")) {
+      getAllEvent();
+    }
+  }, []);
 
   const getPaginationNumbers = () => {
     const pages: (number | string)[] = [];
@@ -86,8 +105,11 @@ export default function ExploreEvent() {
         <SideBarFilter
           categories={categories}
           availableCategories={availableCategories}
+          location={location}
+          availableLocations={availableLocations}
           type={type}
           onCategoryChange={setCategories}
+          onLocationChange={setLocation}
           onTypeChange={setType}
           onApply={() => {
             setPage(1);
@@ -95,6 +117,7 @@ export default function ExploreEvent() {
           }}
           onReset={() => {
             setCategories([]);
+            setLocation("");
             setType("");
             setPage(1);
             getAllEvent();
@@ -118,8 +141,11 @@ export default function ExploreEvent() {
             onSearch={setSearch}
             categories={categories}
             availableCategories={availableCategories}
+            location={location}
+            availableLocations={availableLocations}
             type={type}
             onCategoryChange={setCategories}
+            onLocationChange={setLocation}
             onTypeChange={setType}
             onApply={() => {
               setPage(1);
@@ -128,6 +154,7 @@ export default function ExploreEvent() {
             onReset={() => {
               setSearch("");
               setCategories([]);
+              setLocation("");
               setType("");
               setPage(1);
               getAllEvent();
@@ -167,11 +194,10 @@ export default function ExploreEvent() {
                 key={i}
                 disabled={num === "..."}
                 onClick={() => typeof num === "number" && setPage(num)}
-                className={`w-10 h-10 rounded-lg font-semibold cursor-pointer ${
-                  num === page
+                className={`w-10 h-10 rounded-lg font-semibold cursor-pointer ${num === page
                     ? "bg-blue-600 text-white px-3 py-1 rounded"
                     : "bg-white text-gray-600 hover:bg-gray-100"
-                }`}
+                  }`}
               >
                 {num}
               </button>
