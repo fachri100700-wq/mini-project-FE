@@ -34,10 +34,8 @@ export default function PaymentSuccess() {
   if (!booking)
     return <div className="p-20 text-center">Data not found...</div>;
 
-  // Itung-itungan harga sesuai data BE lu
-  const totalPaid =
-    booking.ticketType.price * booking.quantity -
-    (booking.promo?.discAmount || 0);
+  // Pakai totalPrice yang sudah dihitung backend
+  const totalPaid = booking.totalPrice;
 
   // Ambil data transaksi terbaru
   const latestTransaction = booking.transactions?.[0];
@@ -60,7 +58,7 @@ export default function PaymentSuccess() {
         <p className="text-gray-500 text-sm leading-relaxed">
           Thank you for your payment. The event organizer is currently verifying
           your transaction. This process usually takes up to{" "}
-          <span className="font-bold text-gray-700">24 hours</span>.
+          <span className="font-bold text-gray-700">3 days</span>.
         </p>
       </div>
 

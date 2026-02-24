@@ -23,7 +23,7 @@ export default function TabsNavigation() {
 
   return (
     <>
-      {/* Tabs - UI Lu Tetap Mulus */}
+      {/* Tabs  */}
       <div className="flex gap-5 border-b border-gray-300 ">
         <button
           onClick={() => setShow("about")}
