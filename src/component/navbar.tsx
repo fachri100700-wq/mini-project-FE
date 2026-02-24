@@ -9,12 +9,18 @@ import { FaRegUser } from "react-icons/fa6";
 import { useLocation } from "react-router-dom";
 import useAuthStore from "../stores/useAuthStore";
 import { useLogout } from "../features/login/hooks/useLogout";
+import { useRef } from "react";
+import { IoMenu } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const { pathname } = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const { auth } = useAuthStore();
   const logout = useLogout();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +38,19 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [pathname]);
+
+  useEffect(() => {
+  const handleClickOutside = (e: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
 
   return (
     <>
@@ -74,38 +93,98 @@ export default function Navbar() {
         </div>
 
         {/* 3. RIGHT SECTION */}
-        <div className="flex items-center gap-3">
-          {auth ? (
-            <button
-              onClick={logout}
-              className={`px-5 py-2 font-bold text-sm rounded-full transition-all cursor-pointer ${
-                isScrolled ? "text-black hover:bg-gray-200" : "text-white hover:bg-white/20"
-              }`}
-            >
-              Logout
-            </button>
-          ) : (
-            <>
-              <NavLink
-                to="/login"
-                className={`px-5 py-2 font-bold text-sm rounded-full transition-all cursor-pointer ${
-                  isScrolled ? "text-black hover:bg-gray-200" : "text-white hover:bg-white/20"
-                }`}
-              >
-                Log In
-              </NavLink>
+          <div className="flex items-center gap-3 relative">
+            {auth ? (
+              <>
+                {/* Hamburger Button */}
+                <button
+                  onClick={() => setIsMenuOpen((prev) => !prev)}
+                  className={`p-2 rounded-full transition-colors ${
+                    isScrolled
+                      ? "text-black hover:bg-gray-200"
+                      : "text-white hover:bg-white/20"
+                  }`}
+                >
+                  <IoMenu className="text-2xl" />
+                </button>
+
+            {/* Dropdown */}
+            {isMenuOpen && (
               <div
-                className={`hidden md:block h-6 w-[1px] ${isScrolled ? "bg-gray-200" : "bg-white/30"}`}
-              ></div>
-              <NavLink
-                to="/register"
-                className="bg-[#2563eb] text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-[#1a47aa] transition-all cursor-pointer"
+                ref={menuRef}
+                className="absolute right-0 top-14 w-56 rounded-xl bg-white shadow-lg border border-gray-100 overflow-hidden z-[200]"
               >
-                Sign Up
-              </NavLink>
-            </>
-          )}
-        </div>
+            {/* User Info */}
+            <div className="px-4 py-3 border-b border-gray-100">
+              <p className="text-sm font-bold text-gray-900">
+                {auth.username}
+              </p>
+              <p className="text-xs uppercase tracking-wide text-gray-500">
+                {auth.role}
+              </p>
+            </div>
+
+            {/* Role-based Action */}
+            <div className="p-2">
+              {auth.role === "customer" && (
+                <button
+                  onClick={() => {
+                    navigate("/profile");
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition"
+                >
+                  My Profile
+                </button>
+              )}
+
+              {auth.role === "organizer" && (
+                <button
+                  onClick={() => {
+                    navigate("/dashboard");
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition"
+                >
+                  Event Dashboard
+                </button>
+              )}
+
+              <button
+                onClick={logout}
+                className="w-full text-left px-3 py-2 text-sm rounded-lg text-red-600 hover:bg-red-50 transition"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        )}
+      </>
+    ) : (
+      <>
+        {/* Existing login/register buttons (unchanged) */}
+        <NavLink
+          to="/login"
+          className={`px-5 py-2 font-bold text-sm rounded-full transition-all cursor-pointer ${
+            isScrolled ? "text-black hover:bg-gray-200" : "text-white hover:bg-white/20"
+          }`}
+        >
+          Log In
+        </NavLink>
+        <div
+          className={`hidden md:block h-6 w-[1px] ${
+            isScrolled ? "bg-gray-200" : "bg-white/30"
+          }`}
+        ></div>
+        <NavLink
+          to="/register"
+          className="bg-[#2563eb] text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-[#1a47aa] transition-all cursor-pointer"
+        >
+          Sign Up
+        </NavLink>
+      </>
+    )}
+  </div>
       </nav>
 
       {/* Navbar Bawah */}
