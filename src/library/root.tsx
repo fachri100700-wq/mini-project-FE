@@ -6,7 +6,7 @@ export default function Root() {
   return (
     <>
       <Navbar />
-      <Toaster position="top-right" />
+      <Toaster position="top-center" />
       <div>
         <Outlet />
       </div>

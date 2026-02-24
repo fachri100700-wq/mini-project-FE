@@ -5,7 +5,7 @@ export default function ChangePassword() {
   const { formik } = useChangePassword();
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="mt-10 min-h-screen flex items-center justify-center">
       <div className="card w-full max-w-md bg-base-100 shadow-xl border border-zinc-300">
         <div className="card-body space-y-4">
           <h2 className="card-title justify-center text-2xl">Change Password</h2>

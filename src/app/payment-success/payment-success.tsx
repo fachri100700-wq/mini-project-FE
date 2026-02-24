@@ -43,7 +43,7 @@ export default function PaymentSuccess() {
   const latestTransaction = booking.transactions?.[0];
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] py-16 px-4 flex flex-col items-center">
+    <div className="mt-10 min-h-screen bg-[#F8FAFC] py-16 px-4 flex flex-col items-center">
       {/* Icon Success Animatif */}
       <div className="relative mb-8">
         <div className="absolute inset-0 bg-blue-100 rounded-full animate-ping opacity-25"></div>

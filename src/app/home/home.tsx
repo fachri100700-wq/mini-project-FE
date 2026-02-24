@@ -69,7 +69,7 @@ export default function Home() {
 
   return (
     <div className="bg-gray-50">
-      <Hero />
+      <Hero/>
       <section className="relative flex flex-wrap justify-center gap-4 p-10 items-center -mt-30 md:-mt-20 z-10">
         {displayCategories.map((item) => (
           <CategoryCard
