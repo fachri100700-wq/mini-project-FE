@@ -5,7 +5,7 @@ export default function Login() {
     const { formik } = useFormlogin();
     
     return(
-        <div className="min-h-screen flex items-center justify-center">
+        <div className="mt-10 min-h-screen flex items-center justify-center">
             <div className="card-lg w-100 bg-base-100 rounded-2xl
                             shadow-2xl shadow-base-300
                             border border-zinc-300">

@@ -32,7 +32,7 @@ export default function EventDetail() {
       : 0;
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-10 pb-32 md:pb-24 px-4 md:px-10 mb-20 lg:mb-0">
+    <div className="mt-10 min-h-screen bg-gray-50 pt-10 pb-32 md:pb-24 px-4 md:px-10 mb-20 lg:mb-0">
       {/* 1. HERO IMAGE */}
       <div className="w-full h-[300px] md:h-[450px] rounded-3xl overflow-hidden mb-8 shadow-lg">
         <img

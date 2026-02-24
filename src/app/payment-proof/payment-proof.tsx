@@ -66,7 +66,7 @@ export default function PaymentProof() {
     (booking.promo?.discAmount || 0);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] py-12 px-4">
+    <div className="mt-10 min-h-screen bg-[#F8FAFC] py-12 px-4">
       <div className="max-w-xl mx-auto flex flex-col gap-6">
         {/* Header Section */}
         <div className="text-center space-y-2">

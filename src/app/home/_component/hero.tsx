@@ -5,7 +5,7 @@ import { BiCategory } from "react-icons/bi";
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-[770px] md:h-[600px] overflow-hidden">
+    <section className="relative w-full h-[770px] md:h-[670px] overflow-hidden">
       <img
         src={heroImg}
         alt="Hero Image"
