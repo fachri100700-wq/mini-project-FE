@@ -9,15 +9,21 @@ export default function useAuthGuard<P extends object>(
 ) {
   return function AuthGuardComponent(props: P) {
     const navigate = useNavigate();
-    const role = useAuthStore((state) => state.auth?.role);
+    const auth = useAuthStore((state) => state?.auth);
 
     useEffect(() => {
-      if (!role || !allowedRoles.includes(role)) {
-        navigate("/login", { replace: true });
-      }
-    }, [role, allowedRoles, navigate]);
+      if (auth === null) return;
 
-    if (!role || !allowedRoles.includes(role)) {
+      if (!allowedRoles.includes(auth.role)) {
+        navigate("/", { replace: true });
+      }
+    }, [auth, allowedRoles, navigate]);
+
+    if (auth === null) {
+      return null;
+    }
+
+    if (!allowedRoles.includes(auth.role)) {
       return null;
     }
 

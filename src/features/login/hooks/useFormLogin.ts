@@ -23,7 +23,7 @@ export function useFormlogin() {
 
                 toast.success("Login successfull 🎉")
 
-                navigate("/profile", { replace: true });
+                navigate("/", { replace: true });
             } catch (err: any) {
                 const message = err?.response?.data?.message;
 

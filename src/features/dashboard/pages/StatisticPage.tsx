@@ -27,7 +27,7 @@ interface Statistics {
   groupBy: GroupBy;
 }
 
-export default function StatisticsPage() {
+function StatisticsPage() {
   const [stats, setStats] = useState<Statistics | null>(null);
   const [loading, setLoading] = useState(true);
   const [groupBy, setGroupBy] = useState<GroupBy>("month");
@@ -115,3 +115,5 @@ export default function StatisticsPage() {
     </div>
   );
 }
+
+export default useAuthGuard(StatisticsPage, ["organizer"]);

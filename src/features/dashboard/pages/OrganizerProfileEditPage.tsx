@@ -4,7 +4,7 @@ import useAuthGuard from "../../../app/hoc/useAuthGuard";
 import toast from "react-hot-toast";
 import type { OrganizerProfile, UpdateOrganizerProfilePayload } from "../types";
 
-export default function EditProfilePage() {
+function EditProfilePage() {
   const [profile, setProfile] = useState<OrganizerProfile | null>(null);
   const [formData, setFormData] = useState<UpdateOrganizerProfilePayload>({});
   const [loading, setLoading] = useState(true);
@@ -91,3 +91,5 @@ export default function EditProfilePage() {
     </div>
   );
 }
+
+export default useAuthGuard(EditProfilePage, ["organizer"]);

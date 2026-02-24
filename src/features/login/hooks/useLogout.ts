@@ -13,11 +13,3 @@ export function useLogout() {
     navigate("/login", { replace: true });
   };
 }
-
-// CARA PEMANGGILAN LOGOUT //
-
-// const logout = useLogout();
-
-// <button onClick={logout} className="btn btn-outline">
-//   Logout
-// </button>

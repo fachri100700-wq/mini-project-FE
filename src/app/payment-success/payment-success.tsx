@@ -10,7 +10,7 @@ import axiosInstance from "../../utils/axios-instance";
 import Loading from "../../component/loading";
 import useAuthGuard from "../hoc/useAuthGuard";
 
-export default function PaymentSuccess() {
+function PaymentSuccess() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [booking, setBooking] = useState<any>(null);
@@ -167,3 +167,5 @@ function DetailRow({
     </div>
   );
 }
+
+export default useAuthGuard(PaymentSuccess, ["organizer"]);

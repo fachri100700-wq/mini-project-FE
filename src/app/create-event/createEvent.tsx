@@ -12,7 +12,7 @@ import useAuthGuard from "../hoc/useAuthGuard";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-export default function CreateEvent() {
+function CreateEvent() {
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
@@ -122,3 +122,4 @@ export default function CreateEvent() {
   );
 }
 
+export default useAuthGuard(CreateEvent, ["organizer"]);

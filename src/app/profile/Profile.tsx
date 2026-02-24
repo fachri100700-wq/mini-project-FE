@@ -169,7 +169,7 @@ export default function Profile() {
 
     {/* Toast Notification */}
     {copyToast && (
-      <div className="toast toast-end toast-top">
+      <div className="toast toast-end toast-bottom">
         <div className="alert alert-success shadow-lg">
           <span>Referral code copied!</span>
         </div>

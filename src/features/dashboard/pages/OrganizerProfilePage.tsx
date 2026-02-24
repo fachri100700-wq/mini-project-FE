@@ -3,7 +3,7 @@ import { getOrganizerProfile } from "../api/OrganizerProfilePage.api";
 import useAuthGuard from "../../../app/hoc/useAuthGuard";
 import type { OrganizerProfile } from "../types";
 
-export default function ProfilePage() {
+function ProfilePage() {
   const [profile, setProfile] = useState<OrganizerProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -53,3 +53,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+export default useAuthGuard(ProfilePage, ["organizer"]);
