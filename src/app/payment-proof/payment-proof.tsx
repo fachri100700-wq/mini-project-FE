@@ -8,7 +8,7 @@ import { IoChevronBack, IoCopyOutline, IoCalendarOutline, IoLocationOutline } fr
 import { IoMdCreate } from "react-icons/io";
 import useAuthGuard from "../hoc/useAuthGuard";
 
-function PaymentProof() {
+export default function PaymentProof() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [booking, setBooking] = useState<any>(null);
@@ -300,5 +300,3 @@ function TransferCard({ label, value, onCopy, isCopyable = true }: any) {
     </div>
   );
 }
-
-export default useAuthGuard(PaymentProof, ["organizer"]);
