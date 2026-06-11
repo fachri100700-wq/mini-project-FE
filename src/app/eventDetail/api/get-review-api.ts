@@ -10,6 +10,7 @@ export const useGetReviews = (eventId: string | undefined) => {
     if (!eventId) return;
     try {
       const res = await axiosInstance.get(`/reviews/${eventId}`);
+      console.log("INI RES",res)
 
       const status = res.data.data.transactionDone?.transactionStatus || null;
       setTransactionDone(status);
