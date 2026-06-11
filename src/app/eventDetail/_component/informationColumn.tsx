@@ -176,7 +176,7 @@ export default function InformationColumn({ event }: { event: any }) {
   );
 
   return (
-    <aside className="hidden lg:block w-[400px] flex-shrink-0">
+    <aside className="w-full md:w-[400px] flex-shrink-0">
       <form
         onSubmit={formik.handleSubmit}
         className="bg-white p-6 rounded-[32px] border border-gray-100 shadow-[0_20px_50px_rgba(0,0,0,0.05)] sticky top-24"

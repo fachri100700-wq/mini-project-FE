@@ -39,17 +39,19 @@ export default function Hero() {
         </h1>
 
         {/* Searchbar */}
-        <div className="flex flex-wrap justify-between items-center bg-white rounded-full w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl mt-5">
-          <input
-            type="text"
-            placeholder="What are you looking for?"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            className="w-full md:flex-1 px-5 py-3 outline-none rounded-full placeholder-black/50 text-center md:text-left text-sm"
-          />
+        <div className="flex items-center bg-white rounded-full w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl mt-5">
+          <div className="flex-1 flex items-center min-w-0">
+            <input
+              type="text"
+              placeholder="What are you looking for?"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              className="w-full px-4 md:px-5 py-3 outline-none rounded-full placeholder-black/50 text-left text-sm"
+            />
+          </div>
 
-          <div className="hidden md:flex items-center gap-2 text-black/50 border-l px-5 relative">
+          <div className="hidden md:flex items-center gap-2 text-black/50 border-l px-5 relative flex-shrink-0">
             <IoLocationOutline className="text-gray-400" />
             <input
               type="text"
@@ -61,7 +63,7 @@ export default function Hero() {
             />
           </div>
 
-          <div className="hidden md:flex items-center gap-2 text-black/50 border-l px-5 relative">
+          <div className="hidden md:flex items-center gap-2 text-black/50 border-l px-5 relative flex-shrink-0">
             <BiCategory className="text-gray-400" />
             <select
               value={category}
@@ -79,10 +81,10 @@ export default function Hero() {
 
           <button
             onClick={handleSearch}
-            className="flex items-center gap-1 bg-[#2563eb] text-white px-6 md:px-10 py-3 rounded-full hover:bg-[#1a47aa] duration-300 cursor-pointer"
+            className="flex items-center gap-1 bg-[#2563eb] text-white px-4 md:px-10 py-3 rounded-full hover:bg-[#1a47aa] duration-300 cursor-pointer flex-shrink-0"
           >
-            <span className="hidden md:block">Search</span>
-            <IoMdSearch className="text-2xl" />
+            <span className="hidden md:inline">Search</span>
+            <IoMdSearch className="text-xl" />
           </button>
         </div>
       </div>

@@ -24,12 +24,6 @@ export default function EventDetail() {
       </div>
     );
   }
-
-  const lowestPrice =
-    event.ticketType && event.ticketType.length > 0
-      ? Math.min(...event.ticketType.map((t: any) => t.price))
-      : 0;
-
   return (
     <div className="mt-10 min-h-screen bg-gray-50 pt-10 pb-32 md:pb-24 px-4 md:px-10 mb-20 lg:mb-0">
       {/* 1. HERO IMAGE */}
@@ -41,8 +35,8 @@ export default function EventDetail() {
         />
       </div>
 
-      <div className="flex flex-col lg:flex-row justify-between gap-10 items-start">
-        <div className="flex flex-col gap-5 w-full lg:flex-1 max-w-4xl">
+      <div className="flex flex-col xl:flex-row justify-between gap-10 items-start">
+        <div className="flex flex-col gap-5 w-full xl:flex-1 max-w-4xl">
           {/* Tags */}
           <div className="bg-[#2563eb]/30 text-[#2563eb] text-xs uppercase font-bold tracking-widest rounded-full w-fit py-1 px-4">
             {event.eventCategory}
@@ -92,25 +86,7 @@ export default function EventDetail() {
         <InformationColumn event={event} />
       </div>
 
-      {/* 3. RESPONSIVE: CTA (MOBILE VERSION) */}
-      <nav className="lg:hidden fixed bottom-0 left-0 z-[100] w-full border-t border-gray-100 bg-white shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
-        <div className="flex justify-between items-center py-4 px-6">
-          <div>
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
-              Starting From
-            </p>
-            <h1 className="text-xl font-black text-[#2563eb]">
-              IDR {lowestPrice.toLocaleString("id-ID")}
-            </h1>
-          </div>
-          <button
-            onClick={() => window.scrollTo({ top: 800, behavior: "smooth" })}
-            className="text-white font-bold bg-[#2563eb] hover:bg-[#1a47aa] rounded-2xl py-3 px-6 shadow-lg shadow-blue-200"
-          >
-            Buy Tickets
-          </button>
-        </div>
-      </nav>
+     
     </div>
   );
 }

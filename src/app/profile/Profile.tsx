@@ -35,7 +35,7 @@ export default function Profile() {
 
       {/* Profile Card */}
       <div className="mt-10 max-w-3xl mx-auto space-y-6">
-        <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between bg-white shadow-md rounded-lg p-4 w-full max-w-3xl mx-auto">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between bg-white shadow-md rounded-lg p-4 sm:p-6 w-full max-w-3xl mx-auto">
           {/* Avatar */}
           <div className="flex-shrink-0">
             {profile?.avatarUrl ? (

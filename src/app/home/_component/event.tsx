@@ -33,7 +33,7 @@ export default function Event() {
         meetups, updated daily just for you.
       </p>
 
-      <div className="w-full max-w-[400px] md:max-w-[1200px]  mt-10 px-10 md:px-0">
+      <div className="w-full max-w-[400px] md:max-w-[1200px] mt-10 px-4 md:px-0">
         <Swiper
           centeredSlides={true}
           loop={true}
@@ -42,6 +42,7 @@ export default function Event() {
           grabCursor={true}
           breakpoints={{
             640: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
             1024: { slidesPerView: 4 },
           }}
         >

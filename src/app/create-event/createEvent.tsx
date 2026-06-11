@@ -81,8 +81,8 @@ function CreateEvent() {
   }, [formik.isSubmitting, formik.isValid, formik.errors]); */
 
   return (
-    <main className="bg-gray-50 flex">
-      <aside className="sticky top-0 h-screen">
+    <main className="bg-gray-50 flex flex-col lg:flex-row">
+      <aside className="hidden lg:block sticky top-0 h-screen">
         <CreateEventNavbar />
       </aside>
       <div className="flex flex-col w-full pt-20 pb-32 md:pb-24 px-4 md:px-10 mb-20 lg:mb-0">

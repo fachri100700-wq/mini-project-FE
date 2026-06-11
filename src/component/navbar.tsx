@@ -217,20 +217,26 @@ export default function Navbar() {
           </NavLink>
 
           {/* Create */}
-          <button className="flex flex-col justify-center items-center gap-1 text-gray-500 hover:text-[#2563eb]">
+          <NavLink
+            to="/create-event"
+            className="flex flex-col justify-center items-center gap-1 text-gray-500 hover:text-[#2563eb]"
+          >
             <IoCalendarOutline className="text-xl" />
             <span className="text-[10px] font-medium uppercase tracking-wider">
               Create
             </span>
-          </button>
+          </NavLink>
 
           {/* Profile */}
-          <button className="flex flex-col justify-center items-center gap-1 text-gray-500 hover:text-[#2563eb]">
+          <NavLink
+            to="/profile"
+            className="flex flex-col justify-center items-center gap-1 text-gray-500 hover:text-[#2563eb]"
+          >
             <FaRegUser className="text-xl" />
             <span className="text-[10px] font-medium uppercase tracking-wider">
               Profile
             </span>
-          </button>
+          </NavLink>
         </div>
       </nav>
     </>

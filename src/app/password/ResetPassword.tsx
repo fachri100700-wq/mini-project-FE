@@ -14,8 +14,8 @@ export default function ResetPassword() {
     }
 
     return (
-        <div className="mt-10 min-h-screen flex items-center justify-center">
-            <div className="card-lg w-100 bg-base-100 rounded-2xl
+        <div className="mt-10 min-h-screen flex items-center justify-center px-4">
+            <div className="card-lg w-full max-w-md bg-base-100 rounded-2xl
                             shadow-2xl shadow-base-300
                             border border-zinc-300">
                 <div className="card-body space-y-3">

@@ -58,10 +58,10 @@ export default function AdminVerification() {
   if (loading) return <Loading />;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex flex-col lg:flex-row">
       {/* LEFT SIDE: List Table */}
       <div
-        className={`flex-1 p-8 transition-all ${selectedBooking ? "pr-[400px]" : ""}`}
+        className={`flex-1 p-4 md:p-8 transition-all ${selectedBooking ? "lg:pr-[400px]" : ""}`}
       >
         <header className="mb-8">
           <h1 className="text-2xl font-black text-gray-900">
@@ -72,8 +72,8 @@ export default function AdminVerification() {
           </p>
         </header>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-          <table className="w-full text-left">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-x-auto">
+          <table className="w-full text-left min-w-[600px]">
             <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
                 <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
@@ -130,7 +130,7 @@ export default function AdminVerification() {
 
       {/* RIGHT SIDE: Verification Detail Panel (Drawer Style) */}
       {selectedBooking && (
-        <div className="fixed top-0 right-0 w-[400px] h-full bg-white shadow-2xl border-l border-gray-100 p-6 overflow-y-auto animate-in slide-in-from-right duration-300 z-50">
+        <div className="fixed inset-x-0 top-0 bottom-0 lg:inset-auto lg:top-0 lg:right-0 lg:w-[400px] h-full bg-white shadow-2xl border-l border-gray-100 p-6 overflow-y-auto animate-in slide-in-from-right duration-300 z-50">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-black text-gray-900">
               Verification Detail

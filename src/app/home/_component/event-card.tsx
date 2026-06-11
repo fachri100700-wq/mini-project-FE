@@ -27,7 +27,7 @@ export default function EventCard({
   return (
     <NavLink
       to={`/event-detail/${id}`}
-      className="block m-2 group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 max-w-[300px] cursor-pointer"
+      className="block m-2 group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 cursor-pointer w-full"
     >
       <div className="relative h-[200px] w-full overflow-hidden">
         <img
