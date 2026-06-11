@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import { EventCategory, EventType } from "../../types/enum-event";
 import axiosInstance from "../utils/axiosInstance";
 import { createEventSchema } from "../../features/event/create-event-validation-schema";
-import { useEffect } from "react";
+
 import useAuthGuard from "../hoc/useAuthGuard";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -63,7 +63,7 @@ function CreateEvent() {
           fd.append("discAmount", String(values.discAmount || 0));
         }
 
-        const res = await axiosInstance.post("/events", fd);
+        await axiosInstance.post("/events", fd);
         toast.success("Event created successfully 🎉");
         navigate("/");
       } catch (error) {

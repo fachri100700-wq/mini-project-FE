@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axiosInstance from "../utils/axiosInstance";
 import Loading from "../../component/loading";
 import ImageUpload from "./_component/image-upload";
-import { IoChevronBack, IoCopyOutline, IoCalendarOutline, IoLocationOutline } from "react-icons/io5";
+import { IoCopyOutline, IoCalendarOutline, IoLocationOutline } from "react-icons/io5";
 import { IoMdCreate } from "react-icons/io";
 import useAuthGuard from "../hoc/useAuthGuard";
 
-export default function PaymentProof() {
+function PaymentProof() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [booking, setBooking] = useState<any>(null);

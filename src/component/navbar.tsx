@@ -55,15 +55,18 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed w-full py-4 md:py-2 px-5 md:px-10 flex items-center justify-between top-0 z-[100] transition-all duration-500 ${isScrolled
+        className={`fixed w-full py-4 md:py-2 px-5 md:px-10 flex items-center justify-between top-0 z-[100] transition-all duration-500 ${
+          isScrolled
             ? "bg-white border-b border-gray-100 shadow-sm text-black"
             : "bg-transparent text-white border-transparent"
-          }`}
+        }`}
       >
         {/* 1. LOGO */}
         <NavLink
           to="/"
-          className="flex items-center gap-2 cursor-pointer group">
+          className="flex items-center gap-2 cursor-pointer group"
+        >
+          <img src="/logo.png" className="h-12"/>
           <span
             className={`text-xl font-black tracking-tighter uppercase transition-colors ${isScrolled ? "text-black" : "text-white"}`}
           >
@@ -98,10 +101,11 @@ export default function Navbar() {
               {/* Hamburger Button */}
               <button
                 onClick={() => setIsMenuOpen((prev) => !prev)}
-                className={`p-2 rounded-full transition-colors ${isScrolled
+                className={`p-2 rounded-full transition-colors ${
+                  isScrolled
                     ? "text-black hover:bg-gray-200"
                     : "text-white hover:bg-white/20"
-                  }`}
+                }`}
               >
                 <IoMenu className="text-2xl" />
               </button>
@@ -163,14 +167,18 @@ export default function Navbar() {
               {/* Existing login/register buttons (unchanged) */}
               <NavLink
                 to="/login"
-                className={`px-5 py-2 font-bold text-sm rounded-full transition-all cursor-pointer ${isScrolled ? "text-black hover:bg-gray-200" : "text-white hover:bg-white/20"
-                  }`}
+                className={`px-5 py-2 font-bold text-sm rounded-full transition-all cursor-pointer ${
+                  isScrolled
+                    ? "text-black hover:bg-gray-200"
+                    : "text-white hover:bg-white/20"
+                }`}
               >
                 Log In
               </NavLink>
               <div
-                className={`hidden md:block h-6 w-[1px] ${isScrolled ? "bg-gray-200" : "bg-white/30"
-                  }`}
+                className={`hidden md:block h-6 w-[1px] ${
+                  isScrolled ? "bg-gray-200" : "bg-white/30"
+                }`}
               ></div>
               <NavLink
                 to="/register"

@@ -1,4 +1,3 @@
-import { type ReactNode } from "react";
 import { IoLocationOutline, IoCalendarOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 

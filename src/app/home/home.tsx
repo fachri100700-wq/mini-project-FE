@@ -1,14 +1,10 @@
 import CategoryCard from "./_component/category-card";
 import Hero from "./_component/hero";
 import Event from "./_component/event";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState } from "react";
 import {
   IoMusicalNotesOutline,
-  IoHappyOutline,
   IoBookOutline,
-  IoShirtOutline,
-  IoGameControllerOutline,
-  IoHeartOutline,
   IoEllipsisHorizontalOutline,
 } from "react-icons/io5";
 import { MdOutlineFestival, MdOutlineSportsVolleyball } from "react-icons/md";

@@ -30,7 +30,7 @@ export function useEditProfile() {
         }
         setState({ status: "ready", profile: data });
       } catch {
-        toast.error(err?.message || "Failed to load profile");
+        toast.error("Failed to load profile");
         setState({ status: "error" });
       }
     }
@@ -48,11 +48,11 @@ export function useEditProfile() {
       try {
         const payload: Partial<{ username: string; avatarUrl: string | null }> = {};
 
-        if (values.username !== state.profile.username) {
+        if (values.username !== (state.status === "ready" ? state.profile.username : "")) {
           payload.username = values.username;
         }
 
-        if (values.avatarUrl !== (state.profile.avatarUrl ?? "")) {
+        if (values.avatarUrl !== (state.status === "ready" ? state.profile.avatarUrl ?? "" : "")) {
           payload.avatarUrl = values.avatarUrl || null;
         }
 
@@ -61,21 +61,18 @@ export function useEditProfile() {
           return;
         }
 
-        await updateProfileApi(payload);
+        await updateProfileApi(payload as any);
 
         toast.success("Profile updated successfully ✨");
         navigate("/profile");
       } catch (err: any) {
         const message = err?.response?.data?.message;
 
-
         if (err?.response?.data?.errors) {
-
           Object.entries(err.response.data.errors).forEach(([field, msg]) => {
             setFieldError(field, msg as string);
           });
         } else if (message) {
-
           toast.error(message);
         } else {
           toast.error("Failed to update profile");

@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useParams } from "react-router-dom";
 import { LuGhost } from "react-icons/lu";
 import { BsBuildings } from "react-icons/bs";
@@ -9,7 +9,6 @@ import InformationColumn from "./_component/informationColumn";
 import Loading from "../../component/loading";
 
 import { useGetevent } from "./api/get-by-id.api";
-import useAuthGuard from "../hoc/useAuthGuard";
 
 export default function EventDetail() {
   const { id } = useParams();

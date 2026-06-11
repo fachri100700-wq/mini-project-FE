@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   IoCheckmarkCircle,
@@ -10,7 +10,7 @@ import axiosInstance from "../utils/axiosInstance";
 import Loading from "../../component/loading";
 import useAuthGuard from "../hoc/useAuthGuard";
 
-export default function PaymentSuccess() {
+function PaymentSuccess() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [booking, setBooking] = useState<any>(null);

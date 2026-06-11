@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaUsers, FaClock } from "react-icons/fa";
+import { FaClock } from "react-icons/fa";
 
 interface PromotionsProps {
   values: any;

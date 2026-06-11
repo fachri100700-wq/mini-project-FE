@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import SideBarFilter from "./_component/SideBarFilter";
 import EventCard from "../home/_component/event-card";

@@ -1,5 +1,4 @@
-import { useState, type ReactNode } from "react";
-import axiosInstance from "../../utils/axiosInstance";
+import { type ReactNode } from "react";
 
 interface CategoryProps {
   name: string;
