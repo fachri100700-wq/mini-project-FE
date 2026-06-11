@@ -10,7 +10,7 @@ export default function Profile() {
   const profileState = useProfile();
   const { data: referralInfo, loading: loadingReferral, nextExpiringReward } = useReferralInfo();
   const { data: coupons, loading: loadingCoupons } = useCoupons();
-  
+
   const [copyToast, setCopyToast] = useState(false);
 
   if (profileState.status === "loading") {
@@ -165,16 +165,16 @@ export default function Profile() {
           )}
         </div>
       </div>
-    
 
-    {/* Toast Notification */}
-    {copyToast && (
-      <div className="toast toast-end toast-bottom">
-        <div className="alert alert-success shadow-lg">
-          <span>Referral code copied!</span>
+
+      {/* Toast Notification */}
+      {copyToast && (
+        <div className="toast toast-end toast-bottom">
+          <div className="alert alert-success shadow-lg">
+            <span>Referral code copied!</span>
+          </div>
         </div>
-      </div>
-    )}
+      )}
     </div>
   );
 }

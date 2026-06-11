@@ -15,7 +15,7 @@ import { MdOutlineFestival, MdOutlineSportsVolleyball } from "react-icons/md";
 import { FaTheaterMasks } from "react-icons/fa";
 import { GrWorkshop } from "react-icons/gr";
 import { RiHeartAddLine } from "react-icons/ri";
-import axiosInstance from "../../utils/axios-instance";
+import axiosInstance from "../utils/axiosInstance";
 import type { ApiResponse } from "../../types/api-response";
 import { EventCategory } from "../../types/enum-event";
 

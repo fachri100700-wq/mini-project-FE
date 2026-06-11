@@ -31,39 +31,52 @@ const navItems = [
 
 export default function DashboardSidebar() {
   return (
-    <div className="drawer-side">
+    <div className="drawer-side z-50">
       <label
         htmlFor="dashboard-drawer"
         className="drawer-overlay"
       ></label>
 
-      <aside className="w-64 min-h-full bg-base-100 border-r">
-        <div className="p-4 font-bold text-xl">
-          Dashboard
+      <aside className="w-72 bg-white sticky top-0 shadow-sm min-h-screen pt-5 pb-32 px-4 md:px-10 border-r border-gray-100">
+        <div className="mb-10 px-2">
+          <h2 className="text-2xl font-black tracking-tight uppercase">
+            Dashboard
+          </h2>
         </div>
 
-        <ul className="menu p-2 gap-1">
-          {navItems.map(({ label, to, icon: Icon }) => (
-            <li key={to}>
-              <NavLink
-                to={to}
-                className={({ isActive }) =>
-                  `
-                  flex items-center gap-3
-                  ${
-                    isActive
-                      ? "bg-primary text-primary-content border-l-4 border-primary"
-                      : ""
+        <nav className="space-y-2">
+          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 px-2">
+            Main Menu
+          </p>
+
+          <ul className="space-y-2">
+            {navItems.map(({ label, to, icon: Icon }) => (
+              <li key={to}>
+                <NavLink
+                  to={to}
+                  className={({ isActive }) =>
+                    `flex items-center space-x-3 px-4 py-3 rounded-xl transition-all group ${isActive
+                      ? "text-blue-600 bg-blue-50 shadow-sm font-bold"
+                      : "text-gray-500 hover:bg-gray-50 font-medium"
+                    }`
                   }
-                `
-                }
-              >
-                <Icon size={18} />
-                {label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+                >
+                  {({ isActive }) => (
+                    <>
+                      <Icon
+                        size={22}
+                        className={
+                          isActive ? "text-blue-500" : "group-hover:text-blue-500"
+                        }
+                      />
+                      <span>{label}</span>
+                    </>
+                  )}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </aside>
     </div>
   );

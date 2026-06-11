@@ -27,21 +27,19 @@ export default function TabsNavigation() {
       <div className="flex gap-5 border-b border-gray-300 ">
         <button
           onClick={() => setShow("about")}
-          className={`pb-4 font-semibold duration-300 cursor-pointer ${
-            show === "about"
-              ? "text-[#2563eb] border-b-4 border-[#2563eb]"
-              : "text-gray-600 hover:text-[#2563eb]"
-          }`}
+          className={`pb-4 font-semibold duration-300 cursor-pointer ${show === "about"
+            ? "text-[#2563eb] border-b-4 border-[#2563eb]"
+            : "text-gray-600 hover:text-[#2563eb]"
+            }`}
         >
           About
         </button>
         <button
           onClick={() => setShow("reviews")}
-          className={`pb-4 font-semibold duration-300 cursor-pointer ${
-            show === "reviews"
-              ? "text-[#2563eb] border-b-4 border-[#2563eb]"
-              : "text-gray-600 hover:text-[#2563eb]"
-          }`}
+          className={`pb-4 font-semibold duration-300 cursor-pointer ${show === "reviews"
+            ? "text-[#2563eb] border-b-4 border-[#2563eb]"
+            : "text-gray-600 hover:text-[#2563eb]"
+            }`}
         >
           Reviews
         </button>

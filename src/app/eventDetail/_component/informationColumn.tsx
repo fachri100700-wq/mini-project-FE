@@ -3,8 +3,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { IoChevronForward } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import axiosInstance from "../../../utils/axios-instance";
+import { toast } from "react-hot-toast";
+import axiosInstance from "../../../app/utils/axiosInstance";
 import useAuthStore from "../../../stores/useAuthStore";
 
 const MAX_TICKETS_PER_TYPE = 10;
@@ -29,8 +29,8 @@ const BookingSchema = Yup.object().shape({
 
 export default function InformationColumn({ event }: { event: any }) {
   const navigate = useNavigate();
-
   const auth = useAuthStore((state) => state.auth);
+
 
   // State for coupon & referral reward
   const [coupons, setCoupons] = useState<any[]>([]);
@@ -77,12 +77,39 @@ export default function InformationColumn({ event }: { event: any }) {
     },
     validationSchema: BookingSchema,
     onSubmit: async (values, { setSubmitting }) => {
+      console.log("Booking Submit started:", { auth, values, eventId: event?.id });
+      if (!auth) {
+        console.log("Booking: No auth found in store");
+        toast.error("Please login first");
+        navigate("/login");
+        setSubmitting(false);
+        return;
+      }
+
+      const userRole = auth?.role?.toLowerCase();
+      console.log("Booking: User role found:", userRole);
+
+      if (userRole !== "customer") {
+        console.log("Booking: Invalid role blocked:", userRole);
+        toast.error("Unauthorized: Only customers can book events");
+        navigate("/login");
+        setSubmitting(false);
+        return;
+      }
+
       try {
         const ticketId = Object.keys(values.selectedTickets).find(
           (id) => values.selectedTickets[id] > 0,
         );
 
-        if (!ticketId) return;
+        console.log("Selected Ticket ID:", ticketId, "Quantities:", values.selectedTickets);
+
+        if (!ticketId) {
+          console.log("Booking: No ticket selected");
+          toast.error("Please select a ticket quantity");
+          setSubmitting(false);
+          return;
+        }
 
         const payload: any = {
           eventId: event.id,
@@ -98,10 +125,29 @@ export default function InformationColumn({ event }: { event: any }) {
           payload.referralRewardId = activeReward.id;
         }
 
+        console.log("Booking Request Info:", {
+          url: "/bookings",
+          payload,
+          headers: axiosInstance.defaults.headers
+        });
+
         const { data } = await axiosInstance.post("/bookings", payload);
+        console.log("Booking Success Response:", data);
+
         toast.success("Booking successful!");
-        navigate(`/payment-proof/${data.data.booking.id}`);
+        const bookingId = data?.data?.booking?.id;
+        if (bookingId) {
+          navigate(`/payment-proof/${bookingId}`);
+        } else {
+          console.error("Booking succeeded but ID missing in response:", data);
+          toast.error("Booking succeeded but could not redirect.");
+        }
       } catch (error: any) {
+        console.error("Booking API Error:", {
+          message: error.message,
+          response: error.response?.data,
+          status: error.response?.status
+        });
         toast.error(error.response?.data?.message || "Booking failed.");
       } finally {
         setSubmitting(false);
@@ -368,3 +414,5 @@ export default function InformationColumn({ event }: { event: any }) {
     </aside>
   );
 }
+
+// End of InformationColumn

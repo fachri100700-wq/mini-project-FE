@@ -1,9 +1,11 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { IoStar } from "react-icons/io5";
-import axiosInstance from "../../../utils/axios-instance"; // Sesuaikan path
-import { toast } from "react-toastify";
+import axiosInstance from "../../../app/utils/axiosInstance";
+import { toast } from "react-hot-toast";
 import { useState } from "react";
+import { useGetReviews } from "../api/get-review-api";
+import { useParams } from "react-router-dom";
 
 interface ReviewFormProps {
   eventId: string;
@@ -16,8 +18,12 @@ export default function ReviewForm({
   userId,
   onSuccess,
 }: ReviewFormProps) {
+  const { id } = useParams()
+
   const [hover, setHover] = useState(0);
 
+  const { transactionDone, loading } = useGetReviews(id)
+ 
   const formik = useFormik({
     initialValues: {
       rating: 0,
@@ -39,7 +45,7 @@ export default function ReviewForm({
           eventId,
           userId,
         });
-        toast.success("Review berhasil dikirim!");
+        toast.success("Review success");
         formik.resetForm();
         onSuccess();
       } catch (err: any) {
@@ -47,6 +53,28 @@ export default function ReviewForm({
       }
     },
   });
+
+  if (loading) {
+    return (
+      <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-12 flex flex-col items-center justify-center">
+        <span className="loading loading-spinner loading-lg text-blue-500 mb-4" />
+        <p className="text-gray-400 font-medium animate-pulse">Checking your ticket status...</p>
+      </div>
+    );
+  }
+
+  if (!transactionDone) {
+    return (
+      <div className="w-full bg-gray-50/50 rounded-3xl border border-dashed border-gray-200 p-12 text-center">
+        <div className="bg-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
+          <IoStar className="text-gray-200" size={32} />
+        </div>
+        <p className="text-gray-500 font-bold text-lg">Wanna share your experience?</p>
+        <p className="text-gray-400 text-sm mt-1 max-w-xs mx-auto">You haven't bought a ticket for this event yet. Buy one to unlock the review form!</p>
+      </div>
+    );
+  }
+
 
   return (
     <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-8">

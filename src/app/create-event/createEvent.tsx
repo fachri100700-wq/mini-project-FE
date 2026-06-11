@@ -5,11 +5,11 @@ import Logistics from "./_component/logistics";
 import Ticketing from "./_component/ticketing";
 import { useFormik } from "formik";
 import { EventCategory, EventType } from "../../types/enum-event";
-import axiosInstance from "../../utils/axios-instance";
+import axiosInstance from "../utils/axiosInstance";
 import { createEventSchema } from "../../features/event/create-event-validation-schema";
 import { useEffect } from "react";
 import useAuthGuard from "../hoc/useAuthGuard";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 function CreateEvent() {
@@ -41,7 +41,7 @@ function CreateEvent() {
         const fd = new FormData();
         fd.append("eventName", values.eventName);
         if (values.image) {
-          fd.append("image", values.image); 
+          fd.append("image", values.image);
         }
         fd.append("startDate", values.startDate);
         fd.append("endDate", values.endDate);
@@ -64,7 +64,7 @@ function CreateEvent() {
         }
 
         const res = await axiosInstance.post("/events", fd);
-        toast.success("Event created successfully!");
+        toast.success("Event created successfully 🎉");
         navigate("/");
       } catch (error) {
         console.log(error);
@@ -94,7 +94,7 @@ function CreateEvent() {
             errors={formik.errors}
             touched={formik.touched}
           />
-          
+
           <Logistics
             values={formik.values}
             handleChange={formik.handleChange}
