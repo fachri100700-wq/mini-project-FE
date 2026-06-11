@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axiosInstance from "../.././utils/axios-instance";
+import axiosInstance from "../utils/axiosInstance";
 import Loading from "../../component/loading";
 import ImageUpload from "./_component/image-upload";
 import { IoChevronBack, IoCopyOutline, IoCalendarOutline, IoLocationOutline } from "react-icons/io5";
@@ -182,7 +182,7 @@ function PaymentProof() {
           {/* Edit Selection Button */}
           <button
             type="button"
-            onClick={() => navigate(`/event/${booking.event.id}`)}
+            onClick={() => navigate(`/event-detail/${booking?.event?.id}`)}
             className="w-full flex items-center justify-center gap-2 py-2.5 bg-gray-50 hover:bg-gray-100 rounded-xl border border-gray-200 text-sm font-bold text-gray-600 transition-colors"
           >
             <IoMdCreate className="text-base" />
@@ -248,8 +248,8 @@ function PaymentProof() {
             onClick={handleUpload}
             disabled={isUploading || !selectedFile || isExpired}
             className={`w-full py-4 text-white font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${!selectedFile || isUploading || isExpired
-                ? "bg-gray-200 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-100"
+              ? "bg-gray-200 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-100"
               }`}
           >
             <div
@@ -301,4 +301,4 @@ function TransferCard({ label, value, onCopy, isCopyable = true }: any) {
   );
 }
 
-export default useAuthGuard(PaymentProof, ["organizer"]);
+export default useAuthGuard(PaymentProof, ["customer"]);  

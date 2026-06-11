@@ -17,7 +17,7 @@ export interface UpdateOrganizerEventPayload {
   description?: string;
   seatTotal?: number;
   eventType?: "FREE" | "PAID";
-  eventCategory?: string;       
+  eventCategory?: string;
 }
 
 export interface OrganizerEventDetail extends OrganizerEvent {
@@ -32,10 +32,13 @@ export interface OrganizerProfile {
   email: string;
   bio?: string;
   displayName?: string;
+  avatarUrl?: string;
 }
 
 export interface UpdateOrganizerProfilePayload {
   username?: string;
   bio?: string;
   displayName?: string;
+  avatarUrl?: string;
+  email?: string;
 }

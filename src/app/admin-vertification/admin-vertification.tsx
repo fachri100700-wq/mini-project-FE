@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import {
   IoEyeOutline,
   IoCheckmarkCircle,
   IoCloseCircle,
   IoClose,
 } from "react-icons/io5";
-import axiosInstance from "../../utils/axios-instance";
+import axiosInstance from "../utils/axiosInstance";
 import Loading from "../../component/loading";
 
 export default function AdminVerification() {

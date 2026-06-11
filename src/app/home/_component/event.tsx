@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import EventCard from "../_component/event-card";
-import axiosInstance from "../../../utils/axios-instance";
+import axiosInstance from "../../utils/axiosInstance";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { ApiResponse } from "../../../types/api-response";
 

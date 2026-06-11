@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import axiosInstance from "../../../utils/axios-instance";
+import axiosInstance from "../../utils/axiosInstance";
 
 interface CategoryProps {
   name: string;
@@ -9,7 +9,7 @@ interface CategoryProps {
 
 
 export default function CategoryCard({ name, icon, count }: CategoryProps) {
-  
+
   return (
     <div className="group flex flex-col items-center justify-between bg-white w-full max-w-[160px] h-[180px] p-6 border border-gray-100 rounded-xl shadow-sm hover:shadow-xl transition-all cursor-pointer">
       <div className="text-center">

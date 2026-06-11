@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import SideBarFilter from "./_component/SideBarFilter";
 import EventCard from "../home/_component/event-card";
 import SearchBar from "./_component/SearchBar";
-import axiosInstance from "../../utils/axios-instance";
+import axiosInstance from "../utils/axiosInstance";
 
 export default function ExploreEvent() {
   const [searchParams] = useSearchParams();
@@ -195,8 +195,8 @@ export default function ExploreEvent() {
                 disabled={num === "..."}
                 onClick={() => typeof num === "number" && setPage(num)}
                 className={`w-10 h-10 rounded-lg font-semibold cursor-pointer ${num === page
-                    ? "bg-blue-600 text-white px-3 py-1 rounded"
-                    : "bg-white text-gray-600 hover:bg-gray-100"
+                  ? "bg-blue-600 text-white px-3 py-1 rounded"
+                  : "bg-white text-gray-600 hover:bg-gray-100"
                   }`}
               >
                 {num}

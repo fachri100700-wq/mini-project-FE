@@ -40,29 +40,28 @@ export default function Navbar() {
   }, [pathname]);
 
   useEffect(() => {
-  const handleClickOutside = (e: MouseEvent) => {
-    if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-      setIsMenuOpen(false);
-    }
-  };
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
 
-  document.addEventListener("mousedown", handleClickOutside);
-  return () => {
-    document.removeEventListener("mousedown", handleClickOutside);
-  };
-}, []);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
       <nav
-        className={`fixed w-full py-4 md:py-2 px-5 md:px-10 flex items-center justify-between top-0 z-[100] transition-all duration-500 ${
-          isScrolled
+        className={`fixed w-full py-4 md:py-2 px-5 md:px-10 flex items-center justify-between top-0 z-[100] transition-all duration-500 ${isScrolled
             ? "bg-white border-b border-gray-100 shadow-sm text-black"
             : "bg-transparent text-white border-transparent"
-        }`}
+          }`}
       >
         {/* 1. LOGO */}
-        <NavLink 
+        <NavLink
           to="/"
           className="flex items-center gap-2 cursor-pointer group">
           <span
@@ -93,98 +92,95 @@ export default function Navbar() {
         </div>
 
         {/* 3. RIGHT SECTION */}
-          <div className="flex items-center gap-3 relative">
-            {auth ? (
-              <>
-                {/* Hamburger Button */}
-                <button
-                  onClick={() => setIsMenuOpen((prev) => !prev)}
-                  className={`p-2 rounded-full transition-colors ${
-                    isScrolled
-                      ? "text-black hover:bg-gray-200"
-                      : "text-white hover:bg-white/20"
-                  }`}
-                >
-                  <IoMenu className="text-2xl" />
-                </button>
-
-            {/* Dropdown */}
-            {isMenuOpen && (
-              <div
-                ref={menuRef}
-                className="absolute right-0 top-14 w-56 rounded-xl bg-white shadow-lg border border-gray-100 overflow-hidden z-[200]"
-              >
-            {/* User Info */}
-            <div className="px-4 py-3 border-b border-gray-100">
-              <p className="text-sm font-bold text-gray-900">
-                {auth.username}
-              </p>
-              <p className="text-xs uppercase tracking-wide text-gray-500">
-                {auth.role}
-              </p>
-            </div>
-
-            {/* Role-based Action */}
-            <div className="p-2">
-              {auth.role === "customer" && (
-                <button
-                  onClick={() => {
-                    navigate("/profile");
-                    setIsMenuOpen(false);
-                  }}
-                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition"
-                >
-                  My Profile
-                </button>
-              )}
-
-              {auth.role === "organizer" && (
-                <button
-                  onClick={() => {
-                    navigate("/dashboard");
-                    setIsMenuOpen(false);
-                  }}
-                  className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition"
-                >
-                  Event Dashboard
-                </button>
-              )}
-
+        <div className="flex items-center gap-3 relative">
+          {auth ? (
+            <>
+              {/* Hamburger Button */}
               <button
-                onClick={logout}
-                className="w-full text-left px-3 py-2 text-sm rounded-lg text-red-600 hover:bg-red-50 transition"
+                onClick={() => setIsMenuOpen((prev) => !prev)}
+                className={`p-2 rounded-full transition-colors ${isScrolled
+                    ? "text-black hover:bg-gray-200"
+                    : "text-white hover:bg-white/20"
+                  }`}
               >
-                Logout
+                <IoMenu className="text-2xl" />
               </button>
-            </div>
-          </div>
-        )}
-      </>
-    ) : (
-      <>
-        {/* Existing login/register buttons (unchanged) */}
-        <NavLink
-          to="/login"
-          className={`px-5 py-2 font-bold text-sm rounded-full transition-all cursor-pointer ${
-            isScrolled ? "text-black hover:bg-gray-200" : "text-white hover:bg-white/20"
-          }`}
-        >
-          Log In
-        </NavLink>
-        <div
-          className={`hidden md:block h-6 w-[1px] ${
-            isScrolled ? "bg-gray-200" : "bg-white/30"
-          }`}
-        ></div>
-        <NavLink
-          to="/register"
-          className="bg-[#2563eb] text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-[#1a47aa] transition-all cursor-pointer"
-        >
-          Sign Up
-        </NavLink>
-      </>
-    )}
-  </div>
+
+              {/* Dropdown */}
+              {isMenuOpen && (
+                <div
+                  ref={menuRef}
+                  className="absolute right-0 top-14 w-56 rounded-xl bg-white shadow-lg border border-gray-100 overflow-hidden z-[200]"
+                >
+                  {/* User Info */}
+                  <div className="px-4 py-3 border-b border-gray-100">
+                    <p className="text-sm font-bold text-gray-900">
+                      {auth.username}
+                    </p>
+                    <p className="text-xs uppercase tracking-wide text-gray-500">
+                      {auth.role}
+                    </p>
+                  </div>
+
+                  {/* Role-based Action */}
+                  <div className="p-2">
+                    {auth.role === "customer" && (
+                      <button
+                        onClick={() => {
+                          navigate("/profile");
+                          setIsMenuOpen(false);
+                        }}
+                        className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition"
+                      >
+                        My Profile
+                      </button>
+                    )}
+
+                    {auth.role === "organizer" && (
+                      <button
+                        onClick={() => {
+                          navigate("/dashboard");
+                          setIsMenuOpen(false);
+                        }}
+                        className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-gray-100 transition"
+                      >
+                        Event Dashboard
+                      </button>
+                    )}
+
+                    <button
+                      onClick={logout}
+                      className="w-full text-left px-3 py-2 text-sm rounded-lg text-red-600 hover:bg-red-50 transition"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              {/* Existing login/register buttons (unchanged) */}
+              <NavLink
+                to="/login"
+                className={`px-5 py-2 font-bold text-sm rounded-full transition-all cursor-pointer ${isScrolled ? "text-black hover:bg-gray-200" : "text-white hover:bg-white/20"
+                  }`}
+              >
+                Log In
+              </NavLink>
+              <div
+                className={`hidden md:block h-6 w-[1px] ${isScrolled ? "bg-gray-200" : "bg-white/30"
+                  }`}
+              ></div>
+              <NavLink
+                to="/register"
+                className="bg-[#2563eb] text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-[#1a47aa] transition-all cursor-pointer"
+              >
+                Sign Up
+              </NavLink>
+            </>
+          )}
+        </div>
       </nav>
 
       {/* Navbar Bawah */}

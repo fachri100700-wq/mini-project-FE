@@ -6,7 +6,7 @@ import {
   IoTicketOutline,
   IoChatbubbleEllipsesOutline,
 } from "react-icons/io5";
-import axiosInstance from "../../utils/axios-instance";
+import axiosInstance from "../utils/axiosInstance";
 import Loading from "../../component/loading";
 import useAuthGuard from "../hoc/useAuthGuard";
 
@@ -168,4 +168,4 @@ function DetailRow({
   );
 }
 
-export default useAuthGuard(PaymentSuccess, ["organizer"]);
+export default useAuthGuard(PaymentSuccess, ["customer"]);

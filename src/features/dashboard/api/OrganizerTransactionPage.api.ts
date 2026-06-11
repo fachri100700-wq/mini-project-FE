@@ -4,6 +4,7 @@ export interface Transaction {
   id: string;
   transactionStatus: "WAITING_FOR_ADMIN_CONFIRMATION" | "DONE" | "REJECTED";
   amountPaid: number;
+  paymentProof: string | null;
   createdAt: string;
   user: {
     id: string;

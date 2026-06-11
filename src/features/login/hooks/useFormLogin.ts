@@ -15,11 +15,11 @@ export function useFormlogin() {
             password: ''
         },
         validationSchema: loginSchema,
-        onSubmit: async({ email, password }, { setFieldError }) => {
+        onSubmit: async ({ email, password }, { setFieldError }) => {
             try {
-                const user = await loginApi({email, password});
+                const user = await loginApi({ email, password });
 
-                setAuth({username: user?.username, role: user?.role});
+                setAuth({ username: user?.username, role: user?.role, id: user?.id });
 
                 toast.success("Login successfull 🎉")
 

@@ -4,7 +4,7 @@ type Auth = {
     id: string;
     username: string;
     role: string;
-} | null;
+} | null | undefined;
 
 type UseAuthStore = {
     auth: Auth;
@@ -12,7 +12,7 @@ type UseAuthStore = {
 };
 
 const useAuthStore = create<UseAuthStore>((set) => ({
-    auth: null,
+    auth: undefined,
     setAuth: (auth: Auth) => set({ auth }),
 }));
 

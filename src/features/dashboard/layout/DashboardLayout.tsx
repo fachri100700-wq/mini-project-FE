@@ -3,13 +3,13 @@ import DashboardSidebar from "./DashboardSidebar";
 
 export default function DashboardLayout() {
   return (
-    <div className="drawer lg:drawer-open">
+    <div className="drawer lg:drawer-open mt-15">
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
 
       {/* Main content */}
-      <div className="drawer-content flex flex-col">
+      <div className="drawer-content flex flex-col ">
         {/* Mobile navbar */}
-        <div className="navbar bg-base-100 lg:hidden border-b">
+        <div className="navbar bg-black lg:hidden border-b">
           <div className="flex-none">
             <label
               htmlFor="dashboard-drawer"
@@ -25,7 +25,7 @@ export default function DashboardLayout() {
           </div>
         </div>
 
-        <main className="p-6 bg-base-200 min-h-screen">
+        <main className="bg-gray-50 min-h-screen">
           <Outlet />
         </main>
       </div>

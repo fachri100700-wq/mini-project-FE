@@ -2,25 +2,32 @@ import { useEffect } from "react";
 import useAuthStore from "../stores/useAuthStore";
 import { sessionApi } from "../features/login/api/session.api";
 
-export default function AuthProvider({children}: any){
-    const { setAuth } = useAuthStore();
+export default function AuthProvider({ children }: any) {
+  const { setAuth } = useAuthStore();
 
-    const onSessionAuth = async() => {
-        const user = await sessionApi();
+  const onSessionAuth = async () => {
+    try {
+      const user = await sessionApi();
+      console.log("AuthProvider Session User:", user);
 
+      if (user) {
         setAuth({
-            username: user.username,
-            role: user.role
-        })
-    };
+          id: user.id,
+          username: user.username,
+          role: user.role,
+        });
+      } else {
+        setAuth(null);
+      }
+    } catch (error) {
+      console.error("Session auth failed:", error);
+      setAuth(null);
+    }
+  };
 
-    useEffect(() => {
-        onSessionAuth();
-    }, [])
+  useEffect(() => {
+    onSessionAuth();
+  }, []);
 
-    return(
-        <>
-            {children}
-        </>
-    )
+  return <>{children}</>;
 }
